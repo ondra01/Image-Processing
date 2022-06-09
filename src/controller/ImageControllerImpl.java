@@ -1,14 +1,15 @@
 package controller;
 
-import model.ImageModel;
+import model.ImageProcessingModel;
+import model.Pixel;
 import view.ImageView;
 
 public class ImageControllerImpl implements ImageController {
-  private final ImageModel model;
+  private final ImageProcessingModel model;
   private final ImageView view;
   private final Readable input;
 
-  public ImageControllerImpl(ImageModel model, ImageView view, Readable input) {
+  public ImageControllerImpl(ImageProcessingModel model, ImageView view, Readable input) {
     if (model == null || view == null || input == null) {
       throw new IllegalArgumentException("The model, view, and the Readable input cannot be null!");
     } else {

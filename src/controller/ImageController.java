@@ -11,4 +11,8 @@ public interface ImageController {
    * output.
    */
   void runApplication() throws IllegalStateException;
+
+  void loadImage(String filePathName);
+
+  void saveImage(String filePathName);
 }

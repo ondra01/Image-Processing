@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
+import model.Pixel;
+
 
 /**
  * This class contains utility methods to read a PPM image from file and simply print its contents.
@@ -16,7 +18,7 @@ public class ImageUtil {
    */
   public static void readPPM(String filename) {
     Scanner sc;
-    
+
     try {
         sc = new Scanner(new FileInputStream(filename));
     }
@@ -60,20 +62,6 @@ public class ImageUtil {
             //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
         }
     }
-  }
-
-  //demo main
-  public static void main(String []args) {
-      String filename;
-      
-      if (args.length>0) {
-          filename = args[0];
-      }
-      else {
-          filename = "sample.ppm";
-      }
-      
-      ImageUtil.readPPM(filename);
   }
 }
 
