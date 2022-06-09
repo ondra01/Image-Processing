@@ -6,6 +6,18 @@ package model;
 public interface ImageModel extends ImageModelState {
 
   /**
+   * Retrieves the number of columns of Pixels in an Image.
+   * @return the width of an Image.
+   */
+  int getWidth();
+
+  /**
+   * Retrieves the number of rows of Pixels in an Image.
+   * @return the height of an Image.
+   */
+  int getHeight();
+
+  /**
    * Used to flip the Image horizontally. This does not change the size of the Image.
    */
   void flipHorizontally();

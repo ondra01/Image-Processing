@@ -4,8 +4,8 @@ import java.io.FileInputStream;
 
 
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method 
- *  as required.
+ * This class contains utility methods to read a PPM image from file and simply print its contents.
+ * Feel free to change this method as required.
  */
 public class ImageUtil {
 
@@ -48,13 +48,16 @@ public class ImageUtil {
     System.out.println("Height of image: "+height);
     int maxValue = sc.nextInt();
     System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
-    
+
+    int numOfPixels = 0;
     for (int i=0;i<height;i++) {
         for (int j=0;j<width;j++) {
             int r = sc.nextInt();
             int g = sc.nextInt();
             int b = sc.nextInt();
-            System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
+            numOfPixels++;
+            //System.out.println(numOfPixels);
+            //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
         }
     }
   }

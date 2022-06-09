@@ -27,13 +27,6 @@ public interface Pixel {
    */
   int getBlueValue();
 
-//  /**
-//   * Used to retrieve the Transparency value associated with this Pixel.
-//   *
-//   * @return the Transparency value of this Pixel.
-//   */
-//  int getTransparency();
-
   /**
    * Used to retrieve the maximum value of the RGB fields associated with this Pixel.
    *
@@ -49,7 +42,8 @@ public interface Pixel {
   double getIntensity();
 
   /**
-   * Used to retrieve the weighted sum of the RGB fields associated with this Pixel.
+   * Used to retrieve the weighted sum of the RGB fields associated with this Pixel. The weighted
+   * sum is given by the equation (0.2126 * red) + (0.7152 * green) + (0.0722 * blue)
    *
    * @return the weighted sum of the RGB fields associated with this Pixel.
    */
