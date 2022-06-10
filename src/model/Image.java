@@ -67,4 +67,10 @@ public interface Image {
    * corresponding pixel to visualize the blue component would have the color (120,120,120).
    */
   Image blueToGreyScale();
+
+  Image valueToGreyScale();
+
+  Image intensityToGreyScale();
+
+  Image lumaToGreyScale();
 }

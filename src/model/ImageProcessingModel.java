@@ -91,4 +91,9 @@ public interface ImageProcessingModel {
    */
   void blueToGreyScale(String original, String altered);
 
+  void valueToGreyScale(String original, String altered);
+
+  void intensityToGreyScale(String original, String altered);
+
+  void lumaToGreyScale(String original, String altered);
 }

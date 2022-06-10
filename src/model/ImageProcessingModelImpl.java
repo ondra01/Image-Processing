@@ -1,7 +1,10 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Represents the model in an MVC design of an Image Processing Application.
@@ -136,6 +139,27 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
   public void blueToGreyScale(String original, String altered) {
     Image temp = savedImages.get(original);
     Image alteredImage = temp.blueToGreyScale();
+    savedImages.put(altered, alteredImage);
+  }
+
+  @Override
+  public void valueToGreyScale(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.valueToGreyScale();
+    savedImages.put(altered, alteredImage);
+  }
+
+  @Override
+  public void intensityToGreyScale(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.intensityToGreyScale();
+    savedImages.put(altered, alteredImage);
+  }
+
+  @Override
+  public void lumaToGreyScale(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.lumaToGreyScale();
     savedImages.put(altered, alteredImage);
   }
 }

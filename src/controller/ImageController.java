@@ -1,5 +1,7 @@
 package controller;
 
+import model.Pixel;
+
 /**
  * Represents a controller for an Image Processing Application.
  */
@@ -12,7 +14,13 @@ public interface ImageController {
    */
   void runApplication() throws IllegalStateException;
 
-  void loadImage(String filePathName);
+  /**
+   * Read an image file in the PPM format and convert it to a 2 dimensional Pixel array.
+   *
+   * @param filePathName the path of the file.
+   * @return a 2 dimensional Pixel array representing the loaded image.
+   */
+   Pixel[][] loadImage(String filePathName);
 
   void saveImage(String filePathName);
 }

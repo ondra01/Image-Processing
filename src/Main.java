@@ -1,15 +1,26 @@
+import java.io.InputStreamReader;
+
+import controller.ImageController;
+import controller.ImageControllerImpl;
+import model.ImageProcessingModel;
+import model.ImageProcessingModelImpl;
+import view.ImageView;
+import view.ImageViewImpl;
+
+/**
+ * Class to hold the main method of this program.
+ */
 public class Main {
-
-  //demo main
+  /**
+   * Entry point for the program.
+   * @param args is not used, and can be ignored.
+   */
   public static void main(String[] args) {
-    String filename;
+    ImageProcessingModel model = new ImageProcessingModelImpl();
+    ImageView view = new ImageViewImpl(model, System.out);
+    InputStreamReader input = new InputStreamReader(System.in);
+    ImageController controller = new ImageControllerImpl(model, view, input);
 
-    if (args.length > 0) {
-      filename = args[0];
-    } else {
-      filename = "sample.ppm";
-    }
-
-    ImageUtil.readPPM(filename);
+    controller.runApplication();
   }
 }

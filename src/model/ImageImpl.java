@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Represents an implementation of an Image using a 2 dimensional array of Pixels.
  */
@@ -123,5 +127,30 @@ public class ImageImpl implements Image {
       }
     }
     return new ImageImpl(alteredPixels);
+  }
+
+  @Override
+  public Image valueToGreyScale() {
+    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+    for (int r = 0; r < pixels.length; r++) {
+      for (int c = 0; c < pixels.length; c++) {
+        int alteredRed = pixels[r][c].getBlueValue();
+        int alteredGreen = pixels[r][c].getBlueValue();
+        int alteredBlue = pixels[r][c].getBlueValue();
+        Pixel alteredPixel = new PixelImpl(alteredRed, alteredGreen, alteredBlue);
+        alteredPixels[r][c] = alteredPixel;
+      }
+    }
+    return new ImageImpl(alteredPixels);
+  }
+
+  @Override
+  public Image intensityToGreyScale() {
+    return null;
+  }
+
+  @Override
+  public Image lumaToGreyScale() {
+    return null;
   }
 }
