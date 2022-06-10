@@ -20,32 +20,44 @@ public class PixelImpl implements Pixel {
    * @param blue  represents the Blue value of a pixel, ranging from 0 to 255 inclusive.
    */
   public PixelImpl(int red, int green, int blue) {
-    if (red < 0 || green < 0 || blue < 0) {
-      throw new IllegalArgumentException("RGB values for a Pixel cannot be negative!");
-    } else if (red > 255 || green > 255 || blue > 255) {
-      throw new IllegalArgumentException("RGB values for a Pixel cannot be greater than 255!");
-    } else {
-      this.red = red;
-      this.green = green;
-      this.blue = blue;
+    if (red < 0) {
+      red = 0;
     }
+    if (green < 0) {
+      green = 0;
+    }
+    if (blue < 0) {
+      blue = 0;
+    }
+    if (red > 255) {
+      red = 255;
+    }
+    if (green > 255) {
+      green = 255;
+    }
+    if (blue > 255) {
+      blue = 255;
+    }
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
   }
 
   /**
    * This convenience constructor allows the user to create a grey pixel with the specified shade.
    *
-   * @param shade   represents the RGB values of a pixel, ranging from 0 to 255 inclusive.
+   * @param shade represents the RGB values of a pixel, ranging from 0 to 255 inclusive.
    */
   public PixelImpl(int shade) {
     if (shade < 0) {
-      throw new IllegalArgumentException("RGB values for a Pixel cannot be negative!");
-    } else if (shade > 255) {
-      throw new IllegalArgumentException("RGB values for a Pixel cannot be greater than 255!");
-    } else {
-      this.red = shade;
-      this.green = shade;
-      this.blue = shade;
+      shade = 0;
     }
+    if (shade > 255) {
+      shade = 255;
+    }
+    this.red = shade;
+    this.green = shade;
+    this.blue = shade;
   }
 
   /**

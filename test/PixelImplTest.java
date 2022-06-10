@@ -31,54 +31,84 @@ public class PixelImplTest {
     white = new PixelImpl(255, 255, 255);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidNegativeRGBValuesForPixels0() {
     alsoMiddleGray = new PixelImpl(-3);
+    assertEquals(0, alsoMiddleGray.getRedValue());
+    assertEquals(0, alsoMiddleGray.getGreenValue());
+    assertEquals(0, alsoMiddleGray.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidNegativeRGBValuesForPixels1() {
     black = new PixelImpl(-3, 0, 0);
+    assertEquals(0, black.getRedValue());
+    assertEquals(0, black.getGreenValue());
+    assertEquals(0, black.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidNegativeRGBValuesForPixels2() {
     yellow = new PixelImpl(255, -255, 0);
+    assertEquals(255, yellow.getRedValue());
+    assertEquals(0, yellow.getGreenValue());
+    assertEquals(0, yellow.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidNegativeRGBValuesForPixels3() {
     green = new PixelImpl(0, 255, -7);
+    assertEquals(0, green.getRedValue());
+    assertEquals(255, green.getGreenValue());
+    assertEquals(0, green.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidNegativeRGBValuesForPixels4() {
     white = new PixelImpl(-1, -1, -1);
+    assertEquals(0, white.getRedValue());
+    assertEquals(0, white.getGreenValue());
+    assertEquals(0, white.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidRGBValuesExceed255ForPixels0() {
     alsoMiddleGray = new PixelImpl(256);
+    assertEquals(255, alsoMiddleGray.getRedValue());
+    assertEquals(255, alsoMiddleGray.getGreenValue());
+    assertEquals(255, alsoMiddleGray.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidRGBValuesExceed255ForPixels1() {
     green = new PixelImpl(0, 256, 0);
+    assertEquals(0, green.getRedValue());
+    assertEquals(255, green.getGreenValue());
+    assertEquals(0, green.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidRGBValuesExceed255ForPixels2() {
-    green = new PixelImpl(0, 255, 257);
+    green = new PixelImpl(-4, 255, 257);
+    assertEquals(0, green.getRedValue());
+    assertEquals(255, green.getGreenValue());
+    assertEquals(255, green.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidRGBValuesExceed255ForPixels3() {
     green = new PixelImpl(1000, 255, 0);
+    assertEquals(255, green.getRedValue());
+    assertEquals(255, green.getGreenValue());
+    assertEquals(0, green.getBlueValue());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void invalidRGBValuesExceed255ForPixels4() {
     green = new PixelImpl(300, 300, 300);
+    assertEquals(255, green.getRedValue());
+    assertEquals(255, green.getGreenValue());
+    assertEquals(255, green.getBlueValue());
   }
 
   @Test

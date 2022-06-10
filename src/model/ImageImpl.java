@@ -89,10 +89,8 @@ public class ImageImpl implements Image {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
     for (int r = 0; r < pixels.length; r++) {
       for (int c = 0; c < pixels.length; c++) {
-        int alteredRed = pixels[r][c].getRedValue();
-        int alteredGreen = pixels[r][c].getRedValue();
-        int alteredBlue = pixels[r][c].getRedValue();
-        Pixel alteredPixel = new PixelImpl(alteredRed, alteredGreen, alteredBlue);
+        int alteredVal = pixels[r][c].getRedValue();
+        Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
       }
     }
@@ -104,10 +102,8 @@ public class ImageImpl implements Image {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
     for (int r = 0; r < pixels.length; r++) {
       for (int c = 0; c < pixels.length; c++) {
-        int alteredRed = pixels[r][c].getGreenValue();
-        int alteredGreen = pixels[r][c].getGreenValue();
-        int alteredBlue = pixels[r][c].getGreenValue();
-        Pixel alteredPixel = new PixelImpl(alteredRed, alteredGreen, alteredBlue);
+        int alteredVal = pixels[r][c].getGreenValue();
+        Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
       }
     }
@@ -119,10 +115,8 @@ public class ImageImpl implements Image {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
     for (int r = 0; r < pixels.length; r++) {
       for (int c = 0; c < pixels.length; c++) {
-        int alteredRed = pixels[r][c].getBlueValue();
-        int alteredGreen = pixels[r][c].getBlueValue();
-        int alteredBlue = pixels[r][c].getBlueValue();
-        Pixel alteredPixel = new PixelImpl(alteredRed, alteredGreen, alteredBlue);
+        int alteredVal = pixels[r][c].getBlueValue();
+        Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
       }
     }
@@ -134,10 +128,8 @@ public class ImageImpl implements Image {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
     for (int r = 0; r < pixels.length; r++) {
       for (int c = 0; c < pixels.length; c++) {
-        int alteredRed = pixels[r][c].getBlueValue();
-        int alteredGreen = pixels[r][c].getBlueValue();
-        int alteredBlue = pixels[r][c].getBlueValue();
-        Pixel alteredPixel = new PixelImpl(alteredRed, alteredGreen, alteredBlue);
+        int alteredVal = pixels[r][c].getMaxValue();
+        Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
       }
     }
@@ -146,11 +138,27 @@ public class ImageImpl implements Image {
 
   @Override
   public Image intensityToGreyScale() {
-    return null;
+    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+    for (int r = 0; r < pixels.length; r++) {
+      for (int c = 0; c < pixels.length; c++) {
+        int alteredVal = (int) pixels[r][c].getIntensity();
+        Pixel alteredPixel = new PixelImpl(alteredVal);
+        alteredPixels[r][c] = alteredPixel;
+      }
+    }
+    return new ImageImpl(alteredPixels);
   }
 
   @Override
   public Image lumaToGreyScale() {
-    return null;
+    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+    for (int r = 0; r < pixels.length; r++) {
+      for (int c = 0; c < pixels.length; c++) {
+        int alteredVal = (int) pixels[r][c].getLuma();
+        Pixel alteredPixel = new PixelImpl(alteredVal);
+        alteredPixels[r][c] = alteredPixel;
+      }
+    }
+    return new ImageImpl(alteredPixels);
   }
 }

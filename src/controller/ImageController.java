@@ -1,5 +1,6 @@
 package controller;
 
+import model.Image;
 import model.Pixel;
 
 /**
@@ -22,5 +23,5 @@ public interface ImageController {
    */
    Pixel[][] loadImage(String filePathName);
 
-  void saveImage(String filePathName);
+  void saveImage(String filePathName, Image imageToSave);
 }

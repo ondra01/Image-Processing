@@ -1,9 +1,16 @@
 package controller;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import model.Image;
 import model.ImageImpl;
@@ -37,13 +44,36 @@ public class ImageControllerImpl implements ImageController {
       StringBuilder str = new StringBuilder();
       str.append("Welcome to Image Processor!\n");
       str.append("Type \"help\" for a list of possible commands, "
-              + "or simply begin entering commands.\n "
+              + "or simply begin entering commands.\n"
               + "Enter q or quit at any time to quit the program!\n");
       this.view.renderMessage(str.toString());
     } catch (IOException e) {
       throw new IllegalStateException("IOException thrown when attempting to render the "
               + "welcome message!");
     }
+  }
+
+  private void commandViewToRenderHelpMessage() throws IOException {
+    StringBuilder str = new StringBuilder();
+    str.append("The possible commands are:\n");
+    str.append("1) \"load\" followed by the image-path then image-name ->"
+            + " load image-path image-name\n");
+    str.append("2) \"save\" followed by the image-path then image-name ->"
+            + " save image-path image-name\n");
+    str.append("3) \"red-component\" followed by the image-name then dest-image-name ->"
+            + " red-component image-name dest-image-name\n");
+    str.append("4) \"green-component\" followed by the image-name then dest-image-name ->"
+            + " green-component image-name dest-image-name\n");
+    str.append("5) \"blue-component\" followed by the image-name then dest-image-name ->"
+            + " blue-component image-name dest-image-name\n");
+    str.append("6) \"value-component\" followed by the image-name then dest-image-name ->"
+            + " value-component image-name dest-image-name\n");
+    str.append("7) \"luma-component\" followed by the image-name then dest-image-name ->"
+            + " luma-component image-name dest-image-name\n");
+    str.append("8) \"intensity-component\" followed by the image-name then dest-image-name ->"
+            + " intensity-component image-name dest-image-name\n");
+    str.append("Please enter a command:\n");
+    this.view.renderMessage(str.toString());
   }
 
   /**
@@ -55,11 +85,9 @@ public class ImageControllerImpl implements ImageController {
   public void runApplication() throws IllegalStateException {
     Scanner sc = new Scanner(input);
     boolean programOver = false;
+    this.commandViewToRenderWelcomeMessage();
 
     while (!programOver) { //continue until the user quits
-      //1) Using the view, render the current state of the game.
-      this.commandViewToRenderWelcomeMessage();
-
       if (!sc.hasNext()) {
         throw new IllegalStateException("Out of inputs!");
       }
@@ -74,6 +102,9 @@ public class ImageControllerImpl implements ImageController {
           case "quit":
             this.view.renderMessage("Image Processing Program has been quit...");
             programOver = true;
+            break;
+          case "help":
+            this.commandViewToRenderHelpMessage();
             break;
           case "load":
             this.loadCommand(sc);
@@ -125,7 +156,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.intensityToGreyScale(imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been intensity-To-Grey-Scaled "
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void lumaComponentCommand(Scanner sc) throws IOException {
@@ -133,7 +164,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.lumaToGreyScale(imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been luma-To-Grey-Scaled "
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void valueComponentCommand(Scanner sc) throws IOException {
@@ -141,7 +172,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.valueToGreyScale(imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been value-To-Grey-Scaled "
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void blueComponentCommand(Scanner sc) throws IOException {
@@ -149,7 +180,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.blueToGreyScale(imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been blue-To-Grey-Scaled "
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void greenComponentCommand(Scanner sc) throws IOException {
@@ -157,7 +188,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.greenToGreyScale(imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been green-To-Grey-Scaled "
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void redComponentCommand(Scanner sc) throws IOException {
@@ -165,7 +196,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.redToGreyScale(imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been red-To-Grey-Scaled "
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void brightenCommand(Scanner sc) throws IOException {
@@ -174,7 +205,7 @@ public class ImageControllerImpl implements ImageController {
     String destImageName = sc.next();
     this.model.brightenBy(amount, imageName, destImageName);
     this.view.renderMessage("Image \"" + imageName + "\" has been brightened by " + amount
-            + " and can be referred to by \"" + destImageName + "\".\n");
+            + "and can be referred to by \"" + destImageName + "\".\n");
   }
 
   private void verticalFlipCommand(Scanner sc) throws IOException {
@@ -202,12 +233,46 @@ public class ImageControllerImpl implements ImageController {
   }
 
   private void saveCommand(Scanner sc) throws IOException {
+    String filePathName = sc.next();
+    String imageName = sc.next();
+    Image imageToSave = this.model.getImage(imageName);
+    this.saveImage(filePathName, imageToSave);
     //NEEDS TO BE IMPLEMENTED ------------------------------------------------------------------------------------
   }
 
 
   @Override
-  public void saveImage(String filePathName) {
+  public void saveImage(String filePathName, Image imageToSave) {
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathName)));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    // write header
+    int rowdimension = imageToSave.getHeight();
+    int columndimension = imageToSave.getWidth();
+    try {
+      writer.write("P3");
+      writer.newLine();
+      writer.write(image.numcolumns+" "+image.numrows);
+      writer.newLine();
+      writer.write("256");
+      writer.newLine();
+      for(int row=0;row<rowdimension;row++){
+        for(int column=0;column<columndimension;column++){
+          writer.write(image.getRed()[row][column]+" ");
+          writer.write(image.getGreen()[row][column]+" ");
+          writer.write(image.getBlue()[row][column]+"");
+          if(column < columndimension - 1)writer.write(" ");
+        }
+        writer.newLine();
+      }
+      writer.flush();
+      writer.close();
+    } catch (java.io.IOException e){}
+
+  }
     //First thing should be "P3"
     //width
     //height
@@ -247,6 +312,7 @@ public class ImageControllerImpl implements ImageController {
     String token;
 
     token = sc.next();
+
     if (!token.equals("P3")) {
       System.out.println("Invalid PPM file: plain RAW file should begin with P3");
     }
