@@ -3,15 +3,18 @@ import org.junit.Test;
 
 import model.Image;
 import model.ImageImpl;
+import model.ImageProcessingModel;
+import model.ImageProcessingModelImpl;
 import model.Pixel;
 import model.PixelImpl;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests to verify the functionality of ImageImpl.
+ * Tests to verify the functionality of ImageProcessingModelImpl.
  */
-public class ImageImplTest {
+public class ImageProcessingModelImplTest {
+  ImageProcessingModel model;
   Pixel randomColor = new PixelImpl(36, 128, 210);
   Pixel image_Row0_Column0 = new PixelImpl(10);
   Pixel image_Row0_Column1 = new PixelImpl(194);
@@ -50,40 +53,43 @@ public class ImageImplTest {
     threeByThreePixels[2][1] = image2_Row2_Column1;
     threeByThreePixels[2][2] = image2_Row2_Column2;
     threeByThreeImage = new ImageImpl(threeByThreePixels);
+
+    model = new ImageProcessingModelImpl();
+    model.addImage("Double", twoByTwoImage);
+    model.addImage("Triple", threeByThreeImage);
+  }
+
+  @Test
+  public void addAndGetImage() {
+    model.addImage("Single", imageWithOnePixel);
+
+    assertEquals(imageWithOnePixel, model.getImage("Single"));
+    assertEquals(twoByTwoImage, model.getImage("Double"));
+    assertEquals(threeByThreeImage, model.getImage("Triple"));
+
+    assertEquals(null, model.getImage(null));
+    assertEquals(null, model.getImage("noSuchString"));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testNullConstructor() {
-    twoByTwoImage = new ImageImpl(null);
+  public void addNullImage() {
+    model.addImage("Null", null);
+
+    assertEquals(null, model.getImage("Null"));
   }
 
-  @Test
-  public void getWidth() {
-    assertEquals(1, imageWithOnePixel.getWidth());
-    assertEquals(2, twoByTwoImage.getWidth());
-    assertEquals(3, threeByThreeImage.getWidth());
-  }
+  @Test(expected = IllegalArgumentException.class)
+  public void addImageWithNullName() {
+    model.addImage(null, imageWithOnePixel);
 
-  @Test
-  public void getHeight() {
-    assertEquals(1, imageWithOnePixel.getHeight());
-    assertEquals(2, twoByTwoImage.getHeight());
-    assertEquals(3, threeByThreeImage.getHeight());
-  }
-
-  @Test
-  public void getPixel() {
-    assertEquals(randomColor, imageWithOnePixel.getPixel(0, 0));
-    assertEquals(image_Row0_Column0, twoByTwoImage.getPixel(0, 0));
-    assertEquals(image_Row0_Column0, threeByThreeImage.getPixel(0, 0));
-    assertEquals(image_Row0_Column1, twoByTwoImage.getPixel(0, 1));
-    assertEquals(image_Row0_Column1, threeByThreeImage.getPixel(0, 1));
-    assertEquals(image2_Row2_Column2, threeByThreeImage.getPixel(2, 2));
+    assertEquals(null, model.getImage("Null"));
   }
 
   @Test
   public void flipHorizontally() {
-    Image horizontallyFlippedTwoByTwoImage = twoByTwoImage.flipHorizontally();
+    model.flipHorizontally("Double", "DoubleFlippedHorizontally");
+
+    Image horizontallyFlippedTwoByTwoImage = model.getImage("DoubleFlippedHorizontally");
     assertEquals(194,
             horizontallyFlippedTwoByTwoImage.getPixel(0, 0).getRedValue());
     assertEquals(194,
@@ -96,49 +102,13 @@ public class ImageImplTest {
             horizontallyFlippedTwoByTwoImage.getPixel(1, 0).getRedValue());
     assertEquals(154,
             horizontallyFlippedTwoByTwoImage.getPixel(1, 1).getRedValue());
-
-    Image horizontallyFlippedThreeByThreeImage = threeByThreeImage.flipHorizontally();
-    assertEquals(211,
-            horizontallyFlippedThreeByThreeImage.getPixel(0, 0).getRedValue());
-    assertEquals(211,
-            horizontallyFlippedThreeByThreeImage.getPixel(0, 0).getGreenValue());
-    assertEquals(211,
-            horizontallyFlippedThreeByThreeImage.getPixel(0, 0).getBlueValue());
-    assertEquals(194,
-            horizontallyFlippedThreeByThreeImage.getPixel(0, 1).getRedValue());
-    assertEquals(10,
-            horizontallyFlippedThreeByThreeImage.getPixel(0, 2).getRedValue());
-    assertEquals(64,
-            horizontallyFlippedThreeByThreeImage.getPixel(1, 0).getBlueValue());
-    assertEquals(239,
-            horizontallyFlippedThreeByThreeImage.getPixel(1, 1).getBlueValue());
-    assertEquals(154,
-            horizontallyFlippedThreeByThreeImage.getPixel(1, 2).getBlueValue());
-    assertEquals(111,
-            horizontallyFlippedThreeByThreeImage.getPixel(2, 0).getBlueValue());
-    assertEquals(96,
-            horizontallyFlippedThreeByThreeImage.getPixel(2, 1).getBlueValue());
-    assertEquals(69,
-            horizontallyFlippedThreeByThreeImage.getPixel(2, 2).getBlueValue());
   }
 
   @Test
   public void flipVertically() {
-    Image verticallyFlippedTwoByTwoImage = twoByTwoImage.flipVertically();
-    assertEquals(154,
-            verticallyFlippedTwoByTwoImage.getPixel(0, 0).getRedValue());
-    assertEquals(154,
-            verticallyFlippedTwoByTwoImage.getPixel(0, 0).getGreenValue());
-    assertEquals(154,
-            verticallyFlippedTwoByTwoImage.getPixel(0, 0).getBlueValue());
-    assertEquals(239,
-            verticallyFlippedTwoByTwoImage.getPixel(0, 1).getRedValue());
-    assertEquals(10,
-            verticallyFlippedTwoByTwoImage.getPixel(1, 0).getRedValue());
-    assertEquals(194,
-            verticallyFlippedTwoByTwoImage.getPixel(1, 1).getRedValue());
+    model.flipVertically("Triple", "TripleFlippedHorizontally");
 
-    Image verticallyFlippedThreeByThreeImage = threeByThreeImage.flipVertically();
+    Image verticallyFlippedThreeByThreeImage = model.getImage("TripleFlippedHorizontally");
     assertEquals(69,
             verticallyFlippedThreeByThreeImage.getPixel(0, 0).getRedValue());
     assertEquals(69,
@@ -165,21 +135,10 @@ public class ImageImplTest {
 
   @Test
   public void brightenBy() {
-    Image brightenedBy10TwoByTwoImage = twoByTwoImage.brightenBy(10);
-    assertEquals(20,
-            brightenedBy10TwoByTwoImage.getPixel(0, 0).getRedValue());
-    assertEquals(20,
-            brightenedBy10TwoByTwoImage.getPixel(0, 0).getGreenValue());
-    assertEquals(20,
-            brightenedBy10TwoByTwoImage.getPixel(0, 0).getBlueValue());
-    assertEquals(204,
-            brightenedBy10TwoByTwoImage.getPixel(0, 1).getRedValue());
-    assertEquals(164,
-            brightenedBy10TwoByTwoImage.getPixel(1, 0).getRedValue());
-    assertEquals(249,
-            brightenedBy10TwoByTwoImage.getPixel(1, 1).getRedValue());
+    model.brightenBy(-5, "Triple", "TripleBrightenedByNegative5");
 
-    Image brightenedByNegative5ThreeByThreeImage = threeByThreeImage.brightenBy(-5);
+    Image brightenedByNegative5ThreeByThreeImage =
+            model.getImage("TripleBrightenedByNegative5");
     assertEquals(5,
             brightenedByNegative5ThreeByThreeImage.getPixel(0, 0).getRedValue());
     assertEquals(5,
@@ -206,7 +165,9 @@ public class ImageImplTest {
 
   @Test
   public void redToGreyScale() {
-    Image imageWithOnePixelRedToGreyScale = imageWithOnePixel.redToGreyScale();
+    model.addImage("SinglePixel", imageWithOnePixel);
+    model.redToGreyScale("SinglePixel", "SinglePixelToGreyScale");
+    Image imageWithOnePixelRedToGreyScale = model.getImage("SinglePixelToGreyScale");
     assertEquals(36,
             imageWithOnePixelRedToGreyScale.getPixel(0, 0).getRedValue());
     assertEquals(36,
@@ -217,7 +178,9 @@ public class ImageImplTest {
 
   @Test
   public void greenToGreyScale() {
-    Image imageWithOnePixelGreenToGreyScale = imageWithOnePixel.greenToGreyScale();
+    model.addImage("SinglePixel", imageWithOnePixel);
+    model.greenToGreyScale("SinglePixel", "SinglePixelToGreyScale");
+    Image imageWithOnePixelGreenToGreyScale = model.getImage("SinglePixelToGreyScale");
     assertEquals(128,
             imageWithOnePixelGreenToGreyScale.getPixel(0, 0).getRedValue());
     assertEquals(128,
@@ -228,7 +191,9 @@ public class ImageImplTest {
 
   @Test
   public void blueToGreyScale() {
-    Image imageWithOnePixelBlueToGreyScale = imageWithOnePixel.blueToGreyScale();
+    model.addImage("SinglePixel", imageWithOnePixel);
+    model.blueToGreyScale("SinglePixel", "SinglePixelToGreyScale");
+    Image imageWithOnePixelBlueToGreyScale = model.getImage("SinglePixelToGreyScale");
     assertEquals(210,
             imageWithOnePixelBlueToGreyScale.getPixel(0, 0).getRedValue());
     assertEquals(210,

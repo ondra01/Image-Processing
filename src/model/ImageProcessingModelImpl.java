@@ -23,13 +23,19 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
    */
   @Override
   public void addImage(String imageName, Image image) {
-    savedImages.put(imageName, image);
+    if (imageName != null && image != null) {
+      savedImages.put(imageName, image);
+    } else {
+      throw new IllegalArgumentException("The image or its name cannot be null!");
+    }
   }
 
   /**
    * Gets an Image stored in the model.
    *
-   * @param imageName is the key value (name) associated with the Image to get from the model.
+   * @param imageName is the key value (name) associated with the Image to get from the model. If
+   *                  imageName is null or not present in the model then getImage returns null;
+   * @return the Image associated with the imageName.
    */
   @Override
   public Image getImage(String imageName) {

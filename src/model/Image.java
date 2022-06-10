@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Represents a 2 dimensional Image which has methods to create a new Image based on the data
+ * stored by this Image.
+ */
 public interface Image {
 
   /**
@@ -49,10 +53,10 @@ public interface Image {
   Image redToGreyScale();
 
   /**
-   * Visualizes the green channel of an image by creating a greyscale image, where the RGB components
-   * of the pixels are equal to the specific green channel value of that pixel in the original image.
-   * For example, if a pixel in the original image has the color (120,234,23), then the
-   * corresponding pixel to visualize the green component would have the color (120,120,120).
+   * Visualizes the green channel of an image by creating a greyscale image, where the RGB
+   * components of the pixels are equal to the specific green channel value of that pixel in the
+   * original image. For example, if a pixel in the original image has the color (120,234,23), then
+   * the corresponding pixel to visualize the green component would have the color (120,120,120).
    */
   Image greenToGreyScale();
 

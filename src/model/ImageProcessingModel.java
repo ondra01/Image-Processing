@@ -18,7 +18,9 @@ public interface ImageProcessingModel {
   /**
    * Gets an Image stored in the model.
    *
-   * @param imageName is the key value (name) associated with the Image to get from the model.
+   * @param imageName is the key value (name) associated with the Image to get from the model. If
+   *                  imageName is null or not present in the model then getImage returns null;
+   * @return the Image associated with the imageName.
    */
   Image getImage(String imageName);
 
@@ -66,10 +68,10 @@ public interface ImageProcessingModel {
   void redToGreyScale(String original, String altered);
 
   /**
-   * Visualizes the green channel of an image by creating a greyscale image, where the RGB components
-   * of the pixels are equal to the specific green channel value of that pixel in the original image.
-   * For example, if a pixel in the original image has the color (120,234,23), then the
-   * corresponding pixel to visualize the green component would have the color (120,120,120).
+   * Visualizes the green channel of an image by creating a greyscale image, where the RGB
+   * components of the pixels are equal to the specific green channel value of that pixel in the
+   * original image. For example, if a pixel in the original image has the color (120,234,23), then
+   * the corresponding pixel to visualize the green component would have the color (120,120,120).
    *
    * @param original is the key value (name) associated with an Image which stored in the model.
    * @param altered  is the key value (name) associated with the Image which will be created and

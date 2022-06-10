@@ -1,11 +1,19 @@
 package model;
 
+/**
+ * Represents an implementation of an Image using a 2 dimensional array of Pixels.
+ */
 public class ImageImpl implements Image {
 
   private final Pixel[][] pixels;
   private final int width; //This is the number of columns
   private final int height; //This is the number of rows.
 
+  /**
+   * Only Constructor for an ImageImpl.
+   *
+   * @param pixels is a 2 dimensional array of Pixels that must not be null.
+   */
   public ImageImpl(Pixel[][] pixels) {
     if (pixels != null) {
       this.pixels = pixels;
