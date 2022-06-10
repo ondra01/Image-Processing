@@ -16,7 +16,7 @@ public interface Image {
    */
   int getHeight();
 
-  Pixel getPixel();
+  Pixel getPixel(int row, int col);
 
   /**
    * Used to flip the Image horizontally. This does not change the size of the Image.

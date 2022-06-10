@@ -8,24 +8,35 @@ package model;
 public interface ImageProcessingModel {
 
   /**
+   * Adds an Image to be stored in the model.
    *
-   *
-   * @param filename
-   * @param image
+   * @param imageName is the key value (name) associated with the Image to be stored in the model.
+   * @param image is the Image to be stored in the model.
    */
-  void addImage(String filename, Image image);
-
-  Image getImage(String filename);
+  void addImage(String imageName, Image image);
 
   /**
-   * Used to flip the Image horizontally. This does not change the size of the Image.
+   * Gets an Image stored in the model.
+   *
+   * @param imageName is the key value (name) associated with the Image to get from the model.
+   */
+  Image getImage(String imageName);
+
+  /**
+   * Used to flip the desired Image horizontally. This does not change the size of the Image.
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   void flipHorizontally(String original, String altered);
 
   /**
-   * Used to flip the Image vertically. This does not change the size of the Image.
+   * Used to flip the desired Image Vertically. This does not change the size of the Image.
    *
-   * @return
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   void flipVertically(String original, String altered);
 
@@ -35,7 +46,10 @@ public interface ImageProcessingModel {
    * the Pixels that make up an image the 0 <= x <= 255 color boundaries of each pixel are
    * respected, so no RGB value of a Pixel can exceed those.
    *
-   * @param amount is the specified amount by which to brighten (or darken) the image.
+   * @param amount   is the specified amount by which to brighten (or darken) the image.
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   void brightenBy(int amount, String original, String altered);
 
@@ -44,6 +58,10 @@ public interface ImageProcessingModel {
    * of the pixels are equal to the specific red channel value of that pixel in the original image.
    * For example, if a pixel in the original image has the color (120,234,23), then the
    * corresponding pixel to visualize the red component would have the color (120,120,120).
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   void redToGreyScale(String original, String altered);
 
@@ -52,6 +70,10 @@ public interface ImageProcessingModel {
    * of the pixels are equal to the specific green channel value of that pixel in the original image.
    * For example, if a pixel in the original image has the color (120,234,23), then the
    * corresponding pixel to visualize the green component would have the color (120,120,120).
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   void greenToGreyScale(String original, String altered);
 
@@ -60,6 +82,10 @@ public interface ImageProcessingModel {
    * of the pixels are equal to the specific blue channel value of that pixel in the original image.
    * For example, if a pixel in the original image has the color (120,234,23), then the
    * corresponding pixel to visualize the blue component would have the color (120,120,120).
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   void blueToGreyScale(String original, String altered);
 

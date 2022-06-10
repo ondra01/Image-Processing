@@ -7,60 +7,61 @@ import java.util.Map;
  * Represents the model in an MVC design of an Image Processing Application.
  */
 public class ImageProcessingModelImpl implements ImageProcessingModel {
-//  private int height; //This is the number of rows.
-//  private int width; //This is the number of columns
-//  private Pixel[][] image;
+
   private Map<String, Image> savedImages;
 
   public ImageProcessingModelImpl() {
     savedImages = new HashMap<String, Image>();
   }
 
-  /**
-   * Initializes the image stored by the model with the proper Pixels.
-   */
-  private void setUpImage() {
-
-  }
-
 
   /**
-   * @param filename
-   * @param image
-   */
-  @Override
-  public void addImage(String filename, Image image) {
-    savedImages.put(filename, image);
-  }
-
-  @Override
-  public Image getImage(String filename) {
-    return savedImages.get(filename);
-  }
-
-  /**
-   * Used to flip the Image horizontally. This does not change the size of the Image.
+   * Adds an Image to be stored in the model.
    *
-   * @param original
-   * @param altered
+   * @param imageName is the key value (name) associated with the Image to be stored in the model.
+   * @param image     is the Image to be stored in the model.
+   */
+  @Override
+  public void addImage(String imageName, Image image) {
+    savedImages.put(imageName, image);
+  }
+
+  /**
+   * Gets an Image stored in the model.
+   *
+   * @param imageName is the key value (name) associated with the Image to get from the model.
+   */
+  @Override
+  public Image getImage(String imageName) {
+    return savedImages.get(imageName);
+  }
+
+  /**
+   * Used to flip the desired Image horizontally. This does not change the size of the Image.
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   @Override
   public void flipHorizontally(String original, String altered) {
     Image temp = savedImages.get(original);
-    Image alteredTemp = temp.flipHorizontally();
-    savedImages.put(altered, alteredTemp);
+    Image alteredImage = temp.flipHorizontally();
+    savedImages.put(altered, alteredImage);
   }
 
   /**
-   * Used to flip the Image vertically. This does not change the size of the Image.
+   * Used to flip the desired Image Vertically. This does not change the size of the Image.
    *
-   * @param original
-   * @param altered
-   * @return
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   @Override
   public void flipVertically(String original, String altered) {
-
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.flipVertically();
+    savedImages.put(altered, alteredImage);
   }
 
   /**
@@ -70,12 +71,15 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
    * respected, so no RGB value of a Pixel can exceed those.
    *
    * @param amount   is the specified amount by which to brighten (or darken) the image.
-   * @param original
-   * @param altered
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   @Override
   public void brightenBy(int amount, String original, String altered) {
-
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.brightenBy(amount);
+    savedImages.put(altered, alteredImage);
   }
 
   /**
@@ -84,26 +88,32 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
    * For example, if a pixel in the original image has the color (120,234,23), then the
    * corresponding pixel to visualize the red component would have the color (120,120,120).
    *
-   * @param original
-   * @param altered
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   @Override
   public void redToGreyScale(String original, String altered) {
-
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.redToGreyScale();
+    savedImages.put(altered, alteredImage);
   }
 
   /**
-   * Visualizes the green channel of an image by creating a greyscale image, where the RGB components
-   * of the pixels are equal to the specific green channel value of that pixel in the original image.
-   * For example, if a pixel in the original image has the color (120,234,23), then the
-   * corresponding pixel to visualize the green component would have the color (120,120,120).
+   * Visualizes the green channel of an image by creating a greyscale image, where the RGB
+   * components of the pixels are equal to the specific green channel value of that pixel in the
+   * original image. For example, if a pixel in the original image has the color (120,234,23), then
+   * the corresponding pixel to visualize the green component would have the color (120,120,120).
    *
-   * @param original
-   * @param altered
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   @Override
   public void greenToGreyScale(String original, String altered) {
-
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.greenToGreyScale();
+    savedImages.put(altered, alteredImage);
   }
 
   /**
@@ -112,11 +122,14 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
    * For example, if a pixel in the original image has the color (120,234,23), then the
    * corresponding pixel to visualize the blue component would have the color (120,120,120).
    *
-   * @param original
-   * @param altered
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
    */
   @Override
   public void blueToGreyScale(String original, String altered) {
-
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.blueToGreyScale();
+    savedImages.put(altered, alteredImage);
   }
 }

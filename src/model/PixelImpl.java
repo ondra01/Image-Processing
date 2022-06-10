@@ -32,6 +32,23 @@ public class PixelImpl implements Pixel {
   }
 
   /**
+   * This convenience constructor allows the user to create a grey pixel with the specified shade.
+   *
+   * @param shade   represents the RGB values of a pixel, ranging from 0 to 255 inclusive.
+   */
+  public PixelImpl(int shade) {
+    if (shade < 0) {
+      throw new IllegalArgumentException("RGB values for a Pixel cannot be negative!");
+    } else if (shade > 255) {
+      throw new IllegalArgumentException("RGB values for a Pixel cannot be greater than 255!");
+    } else {
+      this.red = shade;
+      this.green = shade;
+      this.blue = shade;
+    }
+  }
+
+  /**
    * Used to retrieve the Red value associated with this Pixel.
    *
    * @return the Red value of this Pixel.
@@ -67,7 +84,7 @@ public class PixelImpl implements Pixel {
    * @return the maximum value of the RGB fields associated with this Pixel.
    */
   @Override
-  public int getValue() {
+  public int getMaxValue() {
     return Math.max(Math.max(this.red, this.green), this.blue);
   }
 

@@ -17,16 +17,23 @@ public class PixelImplTest {
   Pixel blue;
   Pixel yellow;
   Pixel white;
+  Pixel alsoMiddleGray;
 
   @Before
   public void setUp() throws Exception {
     black = new PixelImpl(0, 0, 0);
     middleGray = new PixelImpl(128, 128, 128);
+    alsoMiddleGray = new PixelImpl(128);
     red = new PixelImpl(255, 0, 0);
     green = new PixelImpl(0, 255, 0);
     blue = new PixelImpl(0, 0, 255);
     yellow = new PixelImpl(255, 255, 0);
     white = new PixelImpl(255, 255, 255);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidNegativeRGBValuesForPixels0() {
+    alsoMiddleGray = new PixelImpl(-3);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -47,6 +54,11 @@ public class PixelImplTest {
   @Test(expected = IllegalArgumentException.class)
   public void invalidNegativeRGBValuesForPixels4() {
     white = new PixelImpl(-1, -1, -1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidRGBValuesExceed255ForPixels0() {
+    alsoMiddleGray = new PixelImpl(256);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -72,30 +84,48 @@ public class PixelImplTest {
   @Test
   public void getRedValue() {
     assertEquals(0, black.getRedValue());
+    assertEquals(255, white.getRedValue());
+    assertEquals(255, yellow.getRedValue());
+    assertEquals(128, this.middleGray.getRedValue());
   }
 
   @Test
   public void getGreenValue() {
     assertEquals(0, black.getGreenValue());
+    assertEquals(255, white.getGreenValue());
+    assertEquals(255, yellow.getGreenValue());
+    assertEquals(128, this.middleGray.getGreenValue());
   }
 
   @Test
   public void getBlueValue() {
     assertEquals(0, black.getBlueValue());
+    assertEquals(255, white.getBlueValue());
+    assertEquals(0, yellow.getBlueValue());
+    assertEquals(128, this.middleGray.getBlueValue());
   }
 
   @Test
-  public void getValue() {
-    assertEquals(0, black.getValue());
+  public void getMaxValue() {
+    assertEquals(0, black.getMaxValue());
+    assertEquals(255, white.getMaxValue());
+    assertEquals(255, yellow.getMaxValue());
+    assertEquals(128, this.middleGray.getMaxValue());
   }
 
   @Test
   public void getIntensity() {
     assertEquals(0, black.getIntensity(), 0.000001);
+    assertEquals(255, white.getIntensity(), 0.000001);
+    assertEquals(170, yellow.getIntensity(), 0.000001);
+    assertEquals(128, this.middleGray.getIntensity(), 0.000001);
   }
 
   @Test
   public void getLuma() {
     assertEquals(0, black.getLuma(), 0.000001);
+    assertEquals(255, white.getLuma(), 0.000001);
+    assertEquals(236.589, yellow.getLuma(), 0.000001);
+    assertEquals(128, this.middleGray.getLuma(), 0.000001);
   }
 }

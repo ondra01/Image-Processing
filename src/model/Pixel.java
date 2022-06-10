@@ -32,7 +32,7 @@ public interface Pixel {
    *
    * @return the maximum value of the RGB fields associated with this Pixel.
    */
-  int getValue();
+  int getMaxValue();
 
   /**
    * Used to retrieve the average value of the RGB fields associated with this Pixel.

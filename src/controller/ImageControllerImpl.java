@@ -28,4 +28,15 @@ public class ImageControllerImpl implements ImageController {
   public void runApplication() throws IllegalStateException {
 
   }
+
+  @Override
+  public void loadImage(String filePathName) {
+
+  }
+
+  @Override
+  public void saveImage(String filePathName) {
+
+  }
+
 }
