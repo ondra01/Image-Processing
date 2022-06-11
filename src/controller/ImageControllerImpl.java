@@ -1,8 +1,6 @@
 package controller;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,7 +8,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 
 import model.Image;
 import model.ImageImpl;
@@ -19,12 +16,25 @@ import model.Pixel;
 import model.PixelImpl;
 import view.ImageView;
 
+/**
+ * Represents an ImageControllerImplementation for an Image processor application.
+ */
 public class ImageControllerImpl implements ImageController {
   private final ImageProcessingModel model;
   private final ImageView view;
   private final Readable input;
 
-  public ImageControllerImpl(ImageProcessingModel model, ImageView view, Readable input) {
+  /**
+   * Default constructor for an ImageControllerImpl.
+   *
+   * @param model keeps track of state and operations available.
+   * @param view  is responsible for displaying the state, and operations available to the user
+   *              graphically.
+   * @param input is the Readable abstraction for user input.
+   * @throws IllegalArgumentException if model, view, or input are null.
+   */
+  public ImageControllerImpl(ImageProcessingModel model, ImageView view, Readable input)
+          throws IllegalArgumentException {
     if (model == null || view == null || input == null) {
       throw new IllegalArgumentException("The model, view, and the Readable input cannot be null!");
     } else {
@@ -237,12 +247,18 @@ public class ImageControllerImpl implements ImageController {
     String imageName = sc.next();
     Image imageToSave = this.model.getImage(imageName);
     this.saveImage(filePathName, imageToSave);
-    //NEEDS TO BE IMPLEMENTED ------------------------------------------------------------------------------------
+    this.view.renderMessage("Image \"" + imageName + "\" has been saved as "
+            + filePathName + ".\n");
   }
-
 
   @Override
   public void saveImage(String filePathName, Image imageToSave) {
+    //First thing should be "P3"
+    //width
+    //height
+    //maximum value
+
+    //new line probably
     BufferedWriter writer = null;
     try {
       writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathName)));
@@ -250,37 +266,31 @@ public class ImageControllerImpl implements ImageController {
       e.printStackTrace();
     }
     // write header
-    int rowdimension = imageToSave.getHeight();
-    int columndimension = imageToSave.getWidth();
+    int rowDimension = imageToSave.getHeight();
+    int columnDimension = imageToSave.getWidth();
     try {
       writer.write("P3");
       writer.newLine();
-      writer.write(image.numcolumns+" "+image.numrows);
+      writer.write(columnDimension + " " + rowDimension);
       writer.newLine();
-      writer.write("256");
+      writer.write("255");
       writer.newLine();
-      for(int row=0;row<rowdimension;row++){
-        for(int column=0;column<columndimension;column++){
-          writer.write(image.getRed()[row][column]+" ");
-          writer.write(image.getGreen()[row][column]+" ");
-          writer.write(image.getBlue()[row][column]+"");
-          if(column < columndimension - 1)writer.write(" ");
+      for (int row = 0; row < rowDimension; row++) {
+        for (int column = 0; column < columnDimension; column++) {
+          writer.write(imageToSave.getPixel(row, column).getRedValue() + " ");
+          writer.write(imageToSave.getPixel(row, column).getGreenValue() + " ");
+          writer.write(imageToSave.getPixel(row, column).getBlueValue() + "");
+          if (column < columnDimension - 1) writer.write(" ");
         }
         writer.newLine();
       }
       writer.flush();
       writer.close();
-    } catch (java.io.IOException e){}
-
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
+    }
   }
-    //First thing should be "P3"
-    //width
-    //height
-    //maximum value
 
-    //new line probably
-
-  }
 
   /**
    * Read an image file in the PPM format and convert it to a 2 dimensional Pixel array.

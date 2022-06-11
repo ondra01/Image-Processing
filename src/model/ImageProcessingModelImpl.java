@@ -1,10 +1,7 @@
 package model;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * Represents the model in an MVC design of an Image Processing Application.

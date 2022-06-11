@@ -1,9 +1,5 @@
 package model;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 /**
  * Represents an implementation of an Image using a 2 dimensional array of Pixels.
  */

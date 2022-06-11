@@ -21,7 +21,7 @@ public interface ImageController {
    * @param filePathName the path of the file.
    * @return a 2 dimensional Pixel array representing the loaded image.
    */
-   Pixel[][] loadImage(String filePathName);
+  Pixel[][] loadImage(String filePathName);
 
   void saveImage(String filePathName, Image imageToSave);
 }

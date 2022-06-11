@@ -91,9 +91,43 @@ public interface ImageProcessingModel {
    */
   void blueToGreyScale(String original, String altered);
 
+  /**
+   * Visualizes the value channel of an image by creating a greyscale image, where the RGB
+   * components
+   * of the pixels are equal to the specific value channel value of that pixel in the original
+   * image.
+   * For example, if a pixel in the original image has the color (120,234,23), then the
+   * corresponding pixel to visualize the value component would have the color (120,120,120).
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
+   */
   void valueToGreyScale(String original, String altered);
 
+  /**
+   * Visualizes the intensity channel of an image by creating a greyscale image, where the RGB
+   * components
+   * of the pixels are equal to the specific intensity channel value of that pixel in the original
+   * image.
+   * For example, if a pixel in the original image has the color (120,234,23), then the
+   * corresponding pixel to visualize the intensity component would have the color (120,120,120).
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
+   */
   void intensityToGreyScale(String original, String altered);
 
+  /**
+   * Visualizes the luma channel of an image by creating a greyscale image, where the RGB components
+   * of the pixels are equal to the specific luma channel value of that pixel in the original image.
+   * For example, if a pixel in the original image has the color (120,234,23), then the
+   * corresponding pixel to visualize the luma component would have the color (120,120,120).
+   *
+   * @param original is the key value (name) associated with an Image which stored in the model.
+   * @param altered  is the key value (name) associated with the Image which will be created and
+   *                 stored in the model by applying the desired change to the original Image.
+   */
   void lumaToGreyScale(String original, String altered);
 }
