@@ -6,9 +6,24 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 
+import controller.commands.BlueComponentCommand;
+import controller.commands.BrightenCommand;
+import controller.commands.GreenComponentCommand;
+import controller.commands.HorizontalFlipCommand;
+import controller.commands.IntensityComponentCommand;
+import controller.commands.LoadCommand;
+import controller.commands.LumaComponentCommand;
+import controller.commands.RedComponentCommand;
+import controller.commands.SaveCommand;
+import controller.commands.ValueComponentCommand;
+import controller.commands.VerticalFlipCommand;
+import controller.commands.ViewToRenderHelpMessageCommand;
+import controller.commands.ViewToRenderWelcomeMessageCommand;
 import model.Image;
 import model.ImageImpl;
 import model.ImageProcessingModel;
@@ -23,6 +38,7 @@ public class ImageControllerImpl implements ImageController {
   private final ImageProcessingModel model;
   private final ImageView view;
   private final Readable input;
+  Map<String, Command> commandMap = new HashMap<String, Command>();
 
   /**
    * Default constructor for an ImageControllerImpl.
@@ -41,49 +57,20 @@ public class ImageControllerImpl implements ImageController {
       this.model = model;
       this.view = view;
       this.input = input;
+      commandMap.put("help", new ViewToRenderHelpMessageCommand());
+      commandMap.put("load", new LoadCommand());
+      commandMap.put("save", new SaveCommand());
+      commandMap.put("red-component", new RedComponentCommand());
+      commandMap.put("green-component", new GreenComponentCommand());
+      commandMap.put("blue-component", new BlueComponentCommand());
+      commandMap.put("value-component", new ValueComponentCommand());
+      commandMap.put("intensity-component", new IntensityComponentCommand());
+      commandMap.put("luma-component", new LumaComponentCommand());
+      commandMap.put("horizontal-flip", new HorizontalFlipCommand());
+      commandMap.put("vertical-flip", new VerticalFlipCommand());
+      commandMap.put("brighten", new BrightenCommand());
+      commandMap.put("welcome-message", new ViewToRenderWelcomeMessageCommand());
     }
-  }
-
-  /**
-   * Used to command the view to render the welcome message.
-   *
-   * @throws IllegalStateException if the view is unable to write to the destination.
-   */
-  private void commandViewToRenderWelcomeMessage() throws IllegalStateException {
-    try {
-      StringBuilder str = new StringBuilder();
-      str.append("Welcome to Image Processor!\n");
-      str.append("Type \"help\" for a list of possible commands, "
-              + "or simply begin entering commands.\n"
-              + "Enter q or quit at any time to quit the program!\n");
-      this.view.renderMessage(str.toString());
-    } catch (IOException e) {
-      throw new IllegalStateException("IOException thrown when attempting to render the "
-              + "welcome message!");
-    }
-  }
-
-  private void commandViewToRenderHelpMessage() throws IOException {
-    StringBuilder str = new StringBuilder();
-    str.append("The possible commands are:\n");
-    str.append("1) \"load\" followed by the image-path then image-name ->"
-            + " load image-path image-name\n");
-    str.append("2) \"save\" followed by the image-path then image-name ->"
-            + " save image-path image-name\n");
-    str.append("3) \"red-component\" followed by the image-name then dest-image-name ->"
-            + " red-component image-name dest-image-name\n");
-    str.append("4) \"green-component\" followed by the image-name then dest-image-name ->"
-            + " green-component image-name dest-image-name\n");
-    str.append("5) \"blue-component\" followed by the image-name then dest-image-name ->"
-            + " blue-component image-name dest-image-name\n");
-    str.append("6) \"value-component\" followed by the image-name then dest-image-name ->"
-            + " value-component image-name dest-image-name\n");
-    str.append("7) \"luma-component\" followed by the image-name then dest-image-name ->"
-            + " luma-component image-name dest-image-name\n");
-    str.append("8) \"intensity-component\" followed by the image-name then dest-image-name ->"
-            + " intensity-component image-name dest-image-name\n");
-    str.append("Please enter a command:\n");
-    this.view.renderMessage(str.toString());
   }
 
   /**
@@ -93,18 +80,16 @@ public class ImageControllerImpl implements ImageController {
    */
   @Override
   public void runApplication() throws IllegalStateException {
-    Scanner sc = new Scanner(input);
-    boolean programOver = false;
-    this.commandViewToRenderWelcomeMessage();
+    try {
+      Scanner sc = new Scanner(input);
+      boolean programOver = false;
+      this.commandMap.get("welcome-message").apply(this.model, this.view, this, sc);
 
-    while (!programOver) { //continue until the user quits
-      if (!sc.hasNext()) {
-        throw new IllegalStateException("Out of inputs!");
-      }
-
-      //3) If the program is ongoing, the next user input is obtained from the Readable object.
-      try {
-        //Check if it is the letter q
+      while (!programOver) { //continue until the user quits
+        if (!sc.hasNext()) {
+          throw new IllegalStateException("Out of inputs!");
+        }
+        //While program is ongoing, the next user input is obtained from the Readable object.
         String userInput = sc.next().toLowerCase();
 
         switch (userInput) {
@@ -113,142 +98,20 @@ public class ImageControllerImpl implements ImageController {
             this.view.renderMessage("Image Processing Program has been quit...");
             programOver = true;
             break;
-          case "help":
-            this.commandViewToRenderHelpMessage();
-            break;
-          case "load":
-            this.loadCommand(sc);
-            break;
-          case "save":
-            this.saveCommand(sc);
-            break;
-          case "red-component":
-            this.redComponentCommand(sc);
-            break;
-          case "green-component":
-            this.greenComponentCommand(sc);
-            break;
-          case "blue-component":
-            this.blueComponentCommand(sc);
-            break;
-          case "value-component":
-            this.valueComponentCommand(sc);
-            break;
-          case "luma-component":
-            this.lumaComponentCommand(sc);
-            break;
-          case "intensity-component":
-            this.intensityComponentCommand(sc);
-            break;
-          case "horizontal-flip":
-            this.horizontalFlipCommand(sc);
-            break;
-          case "vertical-flip":
-            this.verticalFlipCommand(sc);
-            break;
-          case "brighten":
-            this.brightenCommand(sc);
-            break;
           default:
-            //Invalid command given as user input. Ask for new input, and loop.
-            this.view.renderMessage("Invalid User Input. Command entered by user = \""
-                    + userInput + "\". Please input a valid command or enter "
-                    + "\"help\" to get a list of possible commands.\n");
+            if (commandMap.containsKey(userInput)) {
+              this.commandMap.get(userInput).apply(this.model, this.view, this, sc);
+            } else {
+              //Invalid command given as user input. Ask for new input, and loop.
+              this.view.renderMessage("Invalid User Input. Command entered by user = \""
+                      + userInput + "\". Please input a valid command or enter "
+                      + "\"help\" to get a list of possible commands.\n");
+            }
         }
-      } catch (IOException e) {
-        throw new IllegalStateException("IOException thrown when attempting to run the program");
       }
+    } catch (IOException e) {
+      throw new IllegalStateException("IOException thrown when attempting to run the program");
     }
-  }
-
-  private void intensityComponentCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.intensityToGreyScale(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been intensity-To-Grey-Scaled "
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void lumaComponentCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.lumaToGreyScale(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been luma-To-Grey-Scaled "
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void valueComponentCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.valueToGreyScale(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been value-To-Grey-Scaled "
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void blueComponentCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.blueToGreyScale(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been blue-To-Grey-Scaled "
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void greenComponentCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.greenToGreyScale(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been green-To-Grey-Scaled "
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void redComponentCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.redToGreyScale(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been red-To-Grey-Scaled "
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void brightenCommand(Scanner sc) throws IOException {
-    int amount = sc.nextInt();
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.brightenBy(amount, imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been brightened by " + amount
-            + "and can be referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void verticalFlipCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.flipVertically(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been flipped vertically and can be "
-            + "referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void horizontalFlipCommand(Scanner sc) throws IOException {
-    String imageName = sc.next();
-    String destImageName = sc.next();
-    this.model.flipHorizontally(imageName, destImageName);
-    this.view.renderMessage("Image \"" + imageName + "\" has been flipped horizontally and can be "
-            + "referred to by \"" + destImageName + "\".\n");
-  }
-
-  private void loadCommand(Scanner sc) throws IOException {
-    String filePathName = sc.next();
-    String imageName = sc.next();
-    Image loadedImage = new ImageImpl(this.loadImage(filePathName));
-    this.model.addImage(imageName, loadedImage);
-    this.view.renderMessage("Image \"" + imageName + "\" has been loaded.\n");
-  }
-
-  private void saveCommand(Scanner sc) throws IOException {
-    String filePathName = sc.next();
-    String imageName = sc.next();
-    Image imageToSave = this.model.getImage(imageName);
-    this.saveImage(filePathName, imageToSave);
-    this.view.renderMessage("Image \"" + imageName + "\" has been saved as "
-            + filePathName + ".\n");
   }
 
   @Override
@@ -290,7 +153,6 @@ public class ImageControllerImpl implements ImageController {
       e.printStackTrace();
     }
   }
-
 
   /**
    * Read an image file in the PPM format and convert it to a 2 dimensional Pixel array.

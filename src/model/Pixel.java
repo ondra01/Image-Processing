@@ -48,4 +48,6 @@ public interface Pixel {
    * @return the weighted sum of the RGB fields associated with this Pixel.
    */
   double getLuma();
+
+  Pixel applyColorTransformation(ColorMatrix matrix);
 }

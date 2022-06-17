@@ -3,7 +3,7 @@ package model;
 /**
  * Represents an implementation of an Image using a 2 dimensional array of Pixels.
  */
-public class ImageImpl implements Image {
+public class ImageImpl implements FilterableImage {
 
   private final Pixel[][] pixels;
   private final int width; //This is the number of columns
@@ -42,7 +42,7 @@ public class ImageImpl implements Image {
   @Override
   public Image flipHorizontally() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
+    for (int r = 0; r < this.height; r++) {
       int cFromLeft = 0;
       for (int cFromRight = this.width - 1; cFromRight >= 0; cFromRight--) {
         alteredPixels[r][cFromLeft] = pixels[r][cFromRight];
@@ -68,8 +68,8 @@ public class ImageImpl implements Image {
   @Override
   public Image brightenBy(int amount) {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredRed = pixels[r][c].getRedValue() + amount;
         int alteredGreen = pixels[r][c].getGreenValue() + amount;
         int alteredBlue = pixels[r][c].getBlueValue() + amount;
@@ -83,8 +83,8 @@ public class ImageImpl implements Image {
   @Override
   public Image redToGreyScale() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredVal = pixels[r][c].getRedValue();
         Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
@@ -96,8 +96,8 @@ public class ImageImpl implements Image {
   @Override
   public Image greenToGreyScale() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredVal = pixels[r][c].getGreenValue();
         Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
@@ -109,8 +109,8 @@ public class ImageImpl implements Image {
   @Override
   public Image blueToGreyScale() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredVal = pixels[r][c].getBlueValue();
         Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
@@ -122,8 +122,8 @@ public class ImageImpl implements Image {
   @Override
   public Image valueToGreyScale() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredVal = pixels[r][c].getMaxValue();
         Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
@@ -135,8 +135,8 @@ public class ImageImpl implements Image {
   @Override
   public Image intensityToGreyScale() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredVal = (int) pixels[r][c].getIntensity();
         Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
@@ -148,13 +148,39 @@ public class ImageImpl implements Image {
   @Override
   public Image lumaToGreyScale() {
     Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-    for (int r = 0; r < pixels.length; r++) {
-      for (int c = 0; c < pixels.length; c++) {
+    for (int r = 0; r < this.height; r++) {
+      for (int c = 0; c < this.width; c++) {
         int alteredVal = (int) pixels[r][c].getLuma();
         Pixel alteredPixel = new PixelImpl(alteredVal);
         alteredPixels[r][c] = alteredPixel;
       }
     }
     return new ImageImpl(alteredPixels);
+  }
+
+  @Override
+  public Image applyFilter(Filter filter, int row, int col, String channel) {
+    //I AM WORKING HERE -----------------------------------------------------------------------------------------------
+//    switch (channel) {
+//      case "red":
+//        break;
+//      case "green":
+//        break;
+//      case "blue":
+//        break;
+//    }
+//
+//    int filterWidth = filter.getWidth();
+//    int filterHeight = filter.getHeight();
+//    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+//    for (int r = 0; r < this.height; r++) {
+//      for (int c = 0; c < this.width; c++) {
+//        int newRed = (int) pixels[r][c].getLuma();
+//        Pixel alteredPixel = new PixelImpl(alteredVal);
+//        alteredPixels[r][c] = alteredPixel;
+//      }
+//    }
+//    return new ImageImpl(alteredPixels);
+    return null;
   }
 }

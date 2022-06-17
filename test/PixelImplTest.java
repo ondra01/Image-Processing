@@ -1,8 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import model.ColorMatrix;
+import model.CustomColorMatrix;
+import model.GreyscaleColorMatrix;
 import model.Pixel;
 import model.PixelImpl;
+import model.SepiaColorMatrix;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,6 +20,7 @@ public class PixelImplTest {
   Pixel green;
   Pixel blue;
   Pixel yellow;
+  Pixel darkYellow;
   Pixel white;
   Pixel alsoMiddleGray;
 
@@ -28,6 +33,7 @@ public class PixelImplTest {
     green = new PixelImpl(0, 255, 0);
     blue = new PixelImpl(0, 0, 255);
     yellow = new PixelImpl(255, 255, 0);
+    darkYellow = new PixelImpl(100, 100, 0);
     white = new PixelImpl(255, 255, 255);
   }
 
@@ -157,5 +163,44 @@ public class PixelImplTest {
     assertEquals(255, white.getLuma(), 0.000001);
     assertEquals(236.589, yellow.getLuma(), 0.000001);
     assertEquals(128, this.middleGray.getLuma(), 0.000001);
+  }
+
+  @Test
+  public void applyGreyscaleColorTransformation() {
+    ColorMatrix greyScaleMatrix = new GreyscaleColorMatrix();
+    Pixel greyScaledBlack = black.applyColorTransformation(greyScaleMatrix);
+    assertEquals(greyScaledBlack.getRedValue(), black.getRedValue());
+
+    Pixel greyScaledYellow = darkYellow.applyColorTransformation(greyScaleMatrix);
+    int darkYellowGreyValue = (int) (0.2126 * darkYellow.getRedValue()
+            + 0.7152 * darkYellow.getGreenValue()
+            + 0.0722 * darkYellow.getBlueValue());
+    assertEquals(greyScaledYellow.getRedValue(), darkYellowGreyValue);
+    assertEquals(greyScaledYellow.getGreenValue(), darkYellowGreyValue);
+    assertEquals(greyScaledYellow.getBlueValue(), darkYellowGreyValue);
+  }
+
+  @Test
+  public void applySepiaColorTransformation() {
+    ColorMatrix sepiaColorMatrix = new SepiaColorMatrix();
+    Pixel sepiaBlue = blue.applyColorTransformation(sepiaColorMatrix);
+    assertEquals(sepiaBlue.getRedValue(), (int)(255*0.189));
+    assertEquals(sepiaBlue.getGreenValue(), (int)(255*0.168));
+    assertEquals(sepiaBlue.getBlueValue(), (int)(255*0.131));
+  }
+
+  @Test
+  public void applyCustomColorTransformation() {
+    double[][] matrix = new double[3][3];
+    for (int r = 0; r < 3; r++) {
+      for (int c = 0; c < 3; c++) {
+        matrix[r][c] = 0.5;
+      }
+    }
+    ColorMatrix halfColorMatrix = new CustomColorMatrix(matrix);
+    Pixel halfBlue = blue.applyColorTransformation(halfColorMatrix);
+    assertEquals(halfBlue.getRedValue(), 255/2);
+    assertEquals(halfBlue.getGreenValue(), 255/2);
+    assertEquals(halfBlue.getBlueValue(), 255/2);
   }
 }

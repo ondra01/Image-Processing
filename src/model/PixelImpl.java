@@ -120,4 +120,18 @@ public class PixelImpl implements Pixel {
   public double getLuma() {
     return (0.2126 * red) + (0.7152 * green) + (0.0722 * blue);
   }
+
+  @Override
+  public Pixel applyColorTransformation(ColorMatrix matrix) {
+    int newRed = (int) (matrix.get(0, 0) * this.red
+            + matrix.get(0, 1) * this.green
+            + matrix.get(0, 2) * blue);
+    int newGreen = (int) (matrix.get(1, 0) * this.red
+            + matrix.get(1, 1) * this.green
+            + matrix.get(1, 2) * blue);
+    int newBlue = (int) (matrix.get(2, 0) * this.red
+            + matrix.get(2, 1) * this.green
+            + matrix.get(2, 2) * blue);
+    return new PixelImpl(newRed, newGreen, newBlue);
+  }
 }
