@@ -187,4 +187,9 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     Image alteredImage = temp.sepiaToneImage();
     savedImages.put(altered, alteredImage);
   }
+
+  @Override
+  public boolean hasAnImage() {
+    return this.savedImages.size() > 0;
+  }
 }

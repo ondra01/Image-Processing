@@ -138,4 +138,6 @@ public interface ImageProcessingModel {
   void greyscaleImage(String original, String altered);
 
   void sepiaToneImage(String original, String altered);
+
+  boolean hasAnImage();
 }

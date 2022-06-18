@@ -42,6 +42,12 @@ public class ViewToRenderHelpMessageCommand implements Command {
             + " greyscale image-name dest-image-name\n");
     str.append("12) \"sepia\" followed by the image-name then dest-image-name ->"
             + " sepia image-name dest-image-name\n");
+    str.append("13) \"h-flip\" followed by the image-name then dest-image-name ->"
+            + " h-flip image-name dest-image-name\n");
+    str.append("14) \"v-flip\" followed by the image-name then dest-image-name ->"
+            + " v-flip image-name dest-image-name\n");
+    str.append("15) \"file\" followed by the script-file-name.txt ->"
+            + " file script-file-name.txt\n");
     str.append("Please enter a command:\n");
     view.renderMessage(str.toString());
   }

@@ -1,6 +1,8 @@
 package controller;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+
+import javax.imageio.ImageIO;
 
 import controller.commands.BlueComponentCommand;
 import controller.commands.BlurCommand;
@@ -21,6 +25,7 @@ import controller.commands.IntensityComponentCommand;
 import controller.commands.LoadCommand;
 import controller.commands.LumaComponentCommand;
 import controller.commands.RedComponentCommand;
+import controller.commands.RunFileCommand;
 import controller.commands.SaveCommand;
 import controller.commands.SepiaCommand;
 import controller.commands.SharpenCommand;
@@ -38,6 +43,7 @@ import view.ImageView;
  * Represents an ImageControllerImplementation for an Image processor application.
  */
 public class ImageControllerImpl implements ImageController {
+  boolean programOver = false;
   private final ImageProcessingModel model;
   private final ImageView view;
   private final Readable input;
@@ -69,14 +75,15 @@ public class ImageControllerImpl implements ImageController {
       commandMap.put("value-component", new ValueComponentCommand());
       commandMap.put("intensity-component", new IntensityComponentCommand());
       commandMap.put("luma-component", new LumaComponentCommand());
-      commandMap.put("horizontal-flip", new HorizontalFlipCommand());
-      commandMap.put("vertical-flip", new VerticalFlipCommand());
+      commandMap.put("h-flip", new HorizontalFlipCommand());
+      commandMap.put("v-flip", new VerticalFlipCommand());
       commandMap.put("brighten", new BrightenCommand());
       commandMap.put("welcome-message", new ViewToRenderWelcomeMessageCommand());
       commandMap.put("blur", new BlurCommand());
       commandMap.put("sharpen", new SharpenCommand());
       commandMap.put("greyscale", new GreyscaleCommand());
       commandMap.put("sepia", new SepiaCommand());
+      commandMap.put("file", new RunFileCommand());
     }
   }
 
@@ -89,46 +96,52 @@ public class ImageControllerImpl implements ImageController {
   public void runApplication() throws IllegalStateException {
     try {
       Scanner sc = new Scanner(input);
-      boolean programOver = false;
       this.commandMap.get("welcome-message").apply(this.model, this.view, this, sc);
+      this.meatOfRunApplication(sc, "user-input");
 
-      while (!programOver) { //continue until the user quits
-        if (!sc.hasNext()) {
-          throw new IllegalStateException("Out of inputs!");
-        }
-        //While program is ongoing, the next user input is obtained from the Readable object.
-        String userInput = sc.next().toLowerCase();
-
-        switch (userInput) {
-          case "q":
-          case "quit":
-            this.view.renderMessage("Image Processing Program has been quit...");
-            programOver = true;
-            break;
-          default:
-            if (commandMap.containsKey(userInput)) {
-              this.commandMap.get(userInput).apply(this.model, this.view, this, sc);
-            } else {
-              //Invalid command given as user input. Ask for new input, and loop.
-              this.view.renderMessage("Invalid User Input. Command entered by user = \""
-                      + userInput + "\". Please input a valid command or enter "
-                      + "\"help\" to get a list of possible commands.\n");
-            }
-        }
-      }
     } catch (IOException e) {
       throw new IllegalStateException("IOException thrown when attempting to run the program");
     }
   }
 
+  public void meatOfRunApplication(Scanner sc, String inputInfo) throws IOException {
+    while (!programOver) { //continue until the user quits
+      if (!sc.hasNext()) {
+        if (inputInfo == "user-input") {
+          throw new IllegalStateException("Out of inputs!");
+        } else {
+          if (this.model.hasAnImage()) {
+            return;
+          } else {
+            this.view.renderMessage("Nothing left in the script to run!\n");
+            sc = new Scanner(input);
+          }
+        }
+      }
+      //While program is ongoing, the next user input is obtained from the Readable object.
+      String userInput = sc.next().toLowerCase();
+
+      switch (userInput) {
+        case "q":
+        case "quit":
+          this.view.renderMessage("Image Processing Program has been quit...");
+          programOver = true;
+          break;
+        default:
+          if (commandMap.containsKey(userInput)) {
+            this.commandMap.get(userInput).apply(this.model, this.view, this, sc);
+          } else {
+            //Invalid command given as user input. Ask for new input, and loop.
+            this.view.renderMessage("Invalid User Input. Command entered by user = \""
+                    + userInput + "\". Please input a valid command or enter "
+                    + "\"help\" to get a list of possible commands.\n");
+          }
+      }
+    }
+  }
+
   @Override
   public void saveImage(String filePathName, Image imageToSave) {
-    //First thing should be "P3"
-    //width
-    //height
-    //maximum value
-
-    //new line probably
     BufferedWriter writer = null;
     try {
       writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathName)));
@@ -214,5 +227,28 @@ public class ImageControllerImpl implements ImageController {
       }
     }
     return pixelsFromFile;
+  }
+
+  /**
+   * Read an image file in any common format and convert it to a 2 dimensional Pixel array.
+   *
+   * @param filePathName the path of the file.
+   * @return a 2 dimensional Pixel array representing the loaded image.
+   */
+  public Pixel[][] loadImage2(String filePathName) throws IOException {
+    //System.out.println(filePathName);
+    BufferedImage buffImage = ImageIO.read(new File(filePathName));
+    //System.out.println(buffImage.getHeight() + " " + buffImage.getWidth());
+    Pixel[][] loadedPixels = new Pixel[buffImage.getHeight()][buffImage.getWidth()];
+    for (int row = 0; row < buffImage.getHeight(); row++) {
+      for (int col = 0; col < buffImage.getWidth(); col++) {
+        int RGB = buffImage.getRGB(col, row);
+        int red = (RGB >> 16) & 0x000000FF;
+        int green = (RGB >> 8) & 0x000000FF;
+        int blue = (RGB) & 0x000000FF;
+        loadedPixels[row][col] = new PixelImpl(red, green, blue);
+      }
+    }
+    return loadedPixels;
   }
 }

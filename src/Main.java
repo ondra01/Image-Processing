@@ -1,4 +1,9 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
+
+import javax.imageio.ImageIO;
 
 import controller.ImageController;
 import controller.ImageControllerImpl;
@@ -22,5 +27,17 @@ public class Main {
     ImageController controller = new ImageControllerImpl(model, view, input);
 
     controller.runApplication();
+
+//    BufferedImage buffImage = null;
+//    try {
+//      buffImage = ImageIO.read(new File("images/koala-vertical.png"));
+//      int RGB = buffImage.getRGB(1, 0);
+//      int red = (RGB >> 16) & 0x000000FF;
+//      int green = (RGB >> 8) & 0x000000FF;
+//      int blue = (RGB) & 0x000000FF;
+//      System.out.println("Red=" + red + ", Green=" + green + ", Blue=" + blue);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 }

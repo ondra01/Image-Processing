@@ -21,7 +21,12 @@ public class LoadCommand implements Command {
                     Scanner sc) throws IOException {
     String filePathName = sc.next();
     String imageName = sc.next();
-    Image loadedImage = new ImageImpl(controller.loadImage(filePathName));
+    Image loadedImage;
+    if (filePathName.endsWith(".ppm")) {
+      loadedImage = new ImageImpl(controller.loadImage(filePathName));
+    } else {
+      loadedImage = new ImageImpl(controller.loadImage2(filePathName));
+    }
     model.addImage(imageName, loadedImage);
     view.renderMessage("Image \"" + imageName + "\" has been loaded.\n");
   }
