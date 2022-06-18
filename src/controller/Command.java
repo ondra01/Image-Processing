@@ -6,6 +6,10 @@ import java.util.Scanner;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Represents a command available to the controller using the command design pattern. Commands
+ * utilize existing public methods to implement macro functionality.
+ */
 public interface Command {
 
   /**

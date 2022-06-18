@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents a Filter which can be used blur an Image.
+ */
 public class GaussianBlurFilter extends AbstractFilter implements Filter {
 
   @Override

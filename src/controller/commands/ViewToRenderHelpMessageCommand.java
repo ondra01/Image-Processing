@@ -8,6 +8,9 @@ import controller.ImageController;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Command which utilizes the view to display a help menu to the user with available commands.
+ */
 public class ViewToRenderHelpMessageCommand implements Command {
 
   @Override
@@ -31,6 +34,14 @@ public class ViewToRenderHelpMessageCommand implements Command {
             + " luma-component image-name dest-image-name\n");
     str.append("8) \"intensity-component\" followed by the image-name then dest-image-name ->"
             + " intensity-component image-name dest-image-name\n");
+    str.append("9) \"blur\" followed by the image-name then dest-image-name ->"
+            + " blur image-name dest-image-name\n");
+    str.append("10) \"sharpen\" followed by the image-name then dest-image-name ->"
+            + " sharpen image-name dest-image-name\n");
+    str.append("11) \"greyscale\" followed by the image-name then dest-image-name ->"
+            + " greyscale image-name dest-image-name\n");
+    str.append("12) \"sepia\" followed by the image-name then dest-image-name ->"
+            + " sepia image-name dest-image-name\n");
     str.append("Please enter a command:\n");
     view.renderMessage(str.toString());
   }

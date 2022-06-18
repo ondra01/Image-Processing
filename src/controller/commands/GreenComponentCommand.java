@@ -8,9 +8,13 @@ import controller.ImageController;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Command to create a grey-scaled Image based on the green-component of the specified Image.
+ */
 public class GreenComponentCommand implements Command {
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller, Scanner sc) throws IOException {
+  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+                    Scanner sc) throws IOException {
     String imageName = sc.next();
     String destImageName = sc.next();
     model.greenToGreyScale(imageName, destImageName);

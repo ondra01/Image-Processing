@@ -9,16 +9,16 @@ import model.ImageProcessingModel;
 import view.ImageView;
 
 /**
- * Command to create a grey-scaled Image based on the Intensity of the specified Image.
+ * Command to create a blurred Image based on the specified Image.
  */
-public class IntensityComponentCommand implements Command {
+public class BlurCommand implements Command {
   @Override
   public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
                     Scanner sc) throws IOException {
     String imageName = sc.next();
     String destImageName = sc.next();
-    model.intensityToGreyScale(imageName, destImageName);
-    view.renderMessage("Image \"" + imageName + "\" has been intensity-To-Grey-Scaled "
+    model.blurImage(imageName, destImageName);
+    view.renderMessage("Image \"" + imageName + "\" has been blurred "
             + "and can be referred to by \"" + destImageName + "\".\n");
   }
 }

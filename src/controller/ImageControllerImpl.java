@@ -12,20 +12,23 @@ import java.util.Scanner;
 
 
 import controller.commands.BlueComponentCommand;
+import controller.commands.BlurCommand;
 import controller.commands.BrightenCommand;
 import controller.commands.GreenComponentCommand;
+import controller.commands.GreyscaleCommand;
 import controller.commands.HorizontalFlipCommand;
 import controller.commands.IntensityComponentCommand;
 import controller.commands.LoadCommand;
 import controller.commands.LumaComponentCommand;
 import controller.commands.RedComponentCommand;
 import controller.commands.SaveCommand;
+import controller.commands.SepiaCommand;
+import controller.commands.SharpenCommand;
 import controller.commands.ValueComponentCommand;
 import controller.commands.VerticalFlipCommand;
 import controller.commands.ViewToRenderHelpMessageCommand;
 import controller.commands.ViewToRenderWelcomeMessageCommand;
 import model.Image;
-import model.ImageImpl;
 import model.ImageProcessingModel;
 import model.Pixel;
 import model.PixelImpl;
@@ -70,6 +73,10 @@ public class ImageControllerImpl implements ImageController {
       commandMap.put("vertical-flip", new VerticalFlipCommand());
       commandMap.put("brighten", new BrightenCommand());
       commandMap.put("welcome-message", new ViewToRenderWelcomeMessageCommand());
+      commandMap.put("blur", new BlurCommand());
+      commandMap.put("sharpen", new SharpenCommand());
+      commandMap.put("greyscale", new GreyscaleCommand());
+      commandMap.put("sepia", new SepiaCommand());
     }
   }
 
@@ -143,7 +150,9 @@ public class ImageControllerImpl implements ImageController {
           writer.write(imageToSave.getPixel(row, column).getRedValue() + " ");
           writer.write(imageToSave.getPixel(row, column).getGreenValue() + " ");
           writer.write(imageToSave.getPixel(row, column).getBlueValue() + "");
-          if (column < columnDimension - 1) writer.write(" ");
+          if (column < columnDimension - 1) {
+            writer.write(" ");
+          }
         }
         writer.newLine();
       }

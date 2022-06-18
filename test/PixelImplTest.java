@@ -184,9 +184,9 @@ public class PixelImplTest {
   public void applySepiaColorTransformation() {
     ColorMatrix sepiaColorMatrix = new SepiaColorMatrix();
     Pixel sepiaBlue = blue.applyColorTransformation(sepiaColorMatrix);
-    assertEquals(sepiaBlue.getRedValue(), (int)(255*0.189));
-    assertEquals(sepiaBlue.getGreenValue(), (int)(255*0.168));
-    assertEquals(sepiaBlue.getBlueValue(), (int)(255*0.131));
+    assertEquals(sepiaBlue.getRedValue(), (int) (255 * 0.189));
+    assertEquals(sepiaBlue.getGreenValue(), (int) (255 * 0.168));
+    assertEquals(sepiaBlue.getBlueValue(), (int) (255 * 0.131));
   }
 
   @Test
@@ -199,8 +199,8 @@ public class PixelImplTest {
     }
     ColorMatrix halfColorMatrix = new CustomColorMatrix(matrix);
     Pixel halfBlue = blue.applyColorTransformation(halfColorMatrix);
-    assertEquals(halfBlue.getRedValue(), 255/2);
-    assertEquals(halfBlue.getGreenValue(), 255/2);
-    assertEquals(halfBlue.getBlueValue(), 255/2);
+    assertEquals(halfBlue.getRedValue(), 255 / 2);
+    assertEquals(halfBlue.getGreenValue(), 255 / 2);
+    assertEquals(halfBlue.getBlueValue(), 255 / 2);
   }
 }

@@ -1,7 +1,13 @@
 package model;
 
+/**
+ * Represents a ColorMatrix which can be used to sepia-tone an Image.
+ */
 public class SepiaColorMatrix extends AbstractColorMatrix implements ColorMatrix {
 
+  /**
+   * Creates a unique matrix capable of sepia-toning an Image.
+   */
   public SepiaColorMatrix() {
     this.matrix = new double[3][3];
     matrix[0][0] = 0.393;

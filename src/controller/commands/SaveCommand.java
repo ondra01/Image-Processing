@@ -9,6 +9,10 @@ import model.Image;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Command to save an Image to a file from a 2 dimensional array of Pixels represented by the
+ * Image interface, and stored in the model.
+ */
 public class SaveCommand implements Command {
   @Override
   public void apply(ImageProcessingModel model, ImageView view, ImageController controller,

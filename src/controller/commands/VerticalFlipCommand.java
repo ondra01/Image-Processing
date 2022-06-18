@@ -8,6 +8,9 @@ import controller.ImageController;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Command to create a vertically-flipped Image based on the specified Image.
+ */
 public class VerticalFlipCommand implements Command {
   @Override
   public void apply(ImageProcessingModel model, ImageView view, ImageController controller,

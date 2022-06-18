@@ -130,4 +130,12 @@ public interface ImageProcessingModel {
    *                 stored in the model by applying the desired change to the original Image.
    */
   void lumaToGreyScale(String original, String altered);
+
+  void blurImage(String original, String altered);
+
+  void sharpenImage(String original, String altered);
+
+  void greyscaleImage(String original, String altered);
+
+  void sepiaToneImage(String original, String altered);
 }

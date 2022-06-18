@@ -1,7 +1,5 @@
 package controller.commands;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -10,10 +8,12 @@ import controller.ImageController;
 import model.Image;
 import model.ImageImpl;
 import model.ImageProcessingModel;
-import model.Pixel;
-import model.PixelImpl;
 import view.ImageView;
 
+/**
+ * Command to load an Image from a file as a 2 dimensional array of Pixels represented by the
+ * Image interface, and store it in the model.
+ */
 public class LoadCommand implements Command {
 
   @Override

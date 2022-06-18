@@ -8,6 +8,9 @@ import controller.ImageController;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Command to create a grey-scaled Image based on the red-component of the specified Image.
+ */
 public class RedComponentCommand implements Command {
   @Override
   public void apply(ImageProcessingModel model, ImageView view, ImageController controller,

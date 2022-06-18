@@ -159,4 +159,32 @@ public class ImageProcessingModelImpl implements ImageProcessingModel {
     Image alteredImage = temp.lumaToGreyScale();
     savedImages.put(altered, alteredImage);
   }
+
+  @Override
+  public void blurImage(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.applyFilter(new GaussianBlurFilter());
+    savedImages.put(altered, alteredImage);
+  }
+
+  @Override
+  public void sharpenImage(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.applyFilter(new SharpenFilter());
+    savedImages.put(altered, alteredImage);
+  }
+
+  @Override
+  public void greyscaleImage(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.greyscaleImage();
+    savedImages.put(altered, alteredImage);
+  }
+
+  @Override
+  public void sepiaToneImage(String original, String altered) {
+    Image temp = savedImages.get(original);
+    Image alteredImage = temp.sepiaToneImage();
+    savedImages.put(altered, alteredImage);
+  }
 }

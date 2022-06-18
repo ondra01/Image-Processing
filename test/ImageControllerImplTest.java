@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 
 /**
- * Tests
+ * Tests ImageController implementations.
  */
 public class ImageControllerImplTest {
   ImageProcessingModel model;

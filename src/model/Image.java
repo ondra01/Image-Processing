@@ -73,4 +73,10 @@ public interface Image {
   Image intensityToGreyScale();
 
   Image lumaToGreyScale();
+
+  Image applyFilter(Filter filter);
+
+  Image greyscaleImage();
+
+  Image sepiaToneImage();
 }

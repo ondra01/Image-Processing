@@ -8,6 +8,10 @@ import controller.ImageController;
 import model.ImageProcessingModel;
 import view.ImageView;
 
+/**
+ * Command to create a brightened Image based on the specified Image, and the amount to brighten
+ * each RGB value of each Pixel.
+ */
 public class BrightenCommand implements Command {
   @Override
   public void apply(ImageProcessingModel model, ImageView view, ImageController controller,

@@ -1,9 +1,11 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Represents an implementation of an Image using a 2 dimensional array of Pixels.
  */
-public class ImageImpl implements FilterableImage {
+public class ImageImpl implements Image {
 
   private final Pixel[][] pixels;
   private final int width; //This is the number of columns
@@ -36,6 +38,9 @@ public class ImageImpl implements FilterableImage {
 
   @Override
   public Pixel getPixel(int row, int col) {
+    if (!isValidCoordinate(row, col)) {
+      throw new IllegalArgumentException("Invalid coordinate for Pixel retrieval!");
+    }
     return this.pixels[row][col];
   }
 
@@ -159,28 +164,71 @@ public class ImageImpl implements FilterableImage {
   }
 
   @Override
-  public Image applyFilter(Filter filter, int row, int col, String channel) {
-    //I AM WORKING HERE -----------------------------------------------------------------------------------------------
-//    switch (channel) {
-//      case "red":
-//        break;
-//      case "green":
-//        break;
-//      case "blue":
-//        break;
-//    }
-//
-//    int filterWidth = filter.getWidth();
-//    int filterHeight = filter.getHeight();
-//    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
-//    for (int r = 0; r < this.height; r++) {
-//      for (int c = 0; c < this.width; c++) {
-//        int newRed = (int) pixels[r][c].getLuma();
-//        Pixel alteredPixel = new PixelImpl(alteredVal);
-//        alteredPixels[r][c] = alteredPixel;
-//      }
-//    }
-//    return new ImageImpl(alteredPixels);
-    return null;
+  public Image applyFilter(Filter filter) {
+    Objects.requireNonNull(filter);
+    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+
+    //Loop through this image
+    for (int row = 0; row < this.height; row++) {
+      for (int column = 0; column < this.width; column++) {
+        alteredPixels[row][column] = this.applyFilterToPixel(filter, row, column);
+      }
+    }
+    return new ImageImpl(alteredPixels);
+  }
+
+  @Override
+  public Image greyscaleImage() {
+    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+    //Loop through this image
+    for (int row = 0; row < this.height; row++) {
+      for (int column = 0; column < this.width; column++) {
+        alteredPixels[row][column]
+                = pixels[row][column].applyColorTransformation(new GreyscaleColorMatrix());
+      }
+    }
+    return new ImageImpl(alteredPixels);
+  }
+
+  @Override
+  public Image sepiaToneImage() {
+    Pixel[][] alteredPixels = new Pixel[this.height][this.width];
+    //Loop through this image
+    for (int row = 0; row < this.height; row++) {
+      for (int column = 0; column < this.width; column++) {
+        alteredPixels[row][column]
+                = pixels[row][column].applyColorTransformation(new SepiaColorMatrix());
+      }
+    }
+    return new ImageImpl(alteredPixels);
+  }
+
+  private Pixel applyFilterToPixel(Filter filter, int imageRow, int imageColumn) {
+    int filterSize = filter.getSize();
+    int filterCenterIndex = filterSize / 2;
+    int newRed = 0;
+    int newGreen = 0;
+    int newBlue = 0;
+    //Loop through the kernel of the filter
+    for (int r = 0; r < filterSize; r++) {
+      for (int c = 0; c < filterSize; c++) {
+        int equivalentImageRow = imageRow - filterCenterIndex + r;
+        int equivalentImageCol = imageColumn - filterCenterIndex + c;
+        if (isValidCoordinate(equivalentImageRow, equivalentImageCol)) {
+          //Multiply kernel cell value by pixel value
+          newRed += filter.get(r, c)
+                  * pixels[equivalentImageRow][equivalentImageCol].getRedValue();
+          newGreen += filter.get(r, c)
+                  * pixels[equivalentImageRow][equivalentImageCol].getGreenValue();
+          newBlue += filter.get(r, c)
+                  * pixels[equivalentImageRow][equivalentImageCol].getBlueValue();
+        }
+      }
+    }
+    return new PixelImpl(newRed, newGreen, newBlue);
+  }
+
+  private boolean isValidCoordinate(int row, int col) {
+    return !(row < 0 || col < 0 || row >= this.height || col >= this.width);
   }
 }
