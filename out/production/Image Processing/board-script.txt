@@ -1,0 +1,19 @@
+load res/board.png board
+blur board blurredBoard
+save res/blurredBoard.jpeg blurredBoard
+sharpen board sharpenedBoard
+save res/sharpenedBoard.png sharpenedBoard
+greyscale board greyscaleBoard
+save res/greyscaleBoard.png greyscaleBoard
+sepia board sepiaBoard
+save res/sepiaBoard.png sepiaBoard
+help
+red-component board red-grey-board
+green-component board green-grey-board
+blue-component board blue-grey-board
+value-component board value-grey-board
+luma-component board luma-grey-board
+intensity-component board intensity-grey-board
+h-flip board h-flip-board
+v-flip board v-flip-board
+quit

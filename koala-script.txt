@@ -1,0 +1,7 @@
+load images/koala.ppm koala
+brighten 10 koala koala-brighter
+v-flip koala koala-vertical
+h-flip koala-vertical koala-vertical-horizontal
+value-component koala koala-greyscale
+save Andrew’s-koala-brighter.ppm koala-brighter
+quit

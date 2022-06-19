@@ -1,0 +1,19 @@
+load res/dog.png dog
+blur dog blurredDog
+save res/blurredDog.jpeg blurredDog
+sharpen dog sharpenedDog
+save res/sharpenedDog.png sharpenedDog
+greyscale dog greyscaleDog
+save res/greyscaleDog.png greyscaleDog
+sepia dog sepiaDog
+save res/sepiaDog.png sepiaDog
+help
+red-component dog red-grey-dog
+green-component dog green-grey-dog
+blue-component dog blue-grey-dog
+value-component dog value-grey-dog
+luma-component dog luma-grey-dog
+intensity-component dog intensity-grey-dog
+h-flip dog h-flip-dog
+v-flip dog v-flip-dog
+quit

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/Andrew/Downloads/School/Northeastern University/Middler/OOD2/Group/HW/Image Processing/src</OriginalElement>
+  <nodes>
+    <node x="954.0" y="462.0">model.PixelImpl</node>
+    <node x="0.0" y="311.0">controller.commands.BlueComponentCommand</node>
+    <node x="1928.0" y="311.0">controller.commands.IntensityComponentCommand</node>
+    <node x="691.0" y="160.0">model.SharpenFilter</node>
+    <node x="3671.0" y="311.0">controller.commands.VerticalFlipCommand</node>
+    <node x="259.25" y="80.0">model.AbstractColorMatrix</node>
+    <node x="1735.0" y="311.0">controller.commands.SepiaCommand</node>
+    <node x="866.0" y="160.0">model.GaussianBlurFilter</node>
+    <node x="3305.0" y="311.0">controller.commands.ViewToRenderHelpMessageCommand</node>
+    <node x="0.0" y="160.0">model.SepiaColorMatrix</node>
+    <node x="3908.0" y="311.0">controller.commands.BlurCommand</node>
+    <node x="3034.0" y="311.0">controller.commands.RedComponentCommand</node>
+    <node x="1043.0" y="311.0">controller.commands.LoadCommand</node>
+    <node x="565.0" y="462.0">view.ImageViewImpl</node>
+    <node x="794.5" y="384.0">model.Image</node>
+    <node x="275.0" y="311.0">controller.commands.GreyscaleCommand</node>
+    <node x="581.5" y="384.0">view.ImageView</node>
+    <node x="2632.0" y="311.0">controller.commands.ViewToRenderWelcomeMessageCommand</node>
+    <node x="327.5" y="384.0">controller.ImageController</node>
+    <node x="0.0" y="462.0">model.ImageProcessingModelImpl</node>
+    <node x="2424.0" y="311.0">controller.commands.RunFileCommand</node>
+    <node x="1231.0" y="311.0">controller.commands.BrightenCommand</node>
+    <node x="791.75" y="80.0">model.AbstractFilter</node>
+    <node x="970.5" y="384.0">model.Pixel</node>
+    <node x="427.0" y="160.0">model.GreyscaleColorMatrix</node>
+    <node x="760.0" y="311.0">controller.commands.ValueComponentCommand</node>
+    <node x="2236.0" y="311.0">controller.commands.SaveCommand</node>
+    <node x="778.0" y="462.0">model.ImageImpl</node>
+    <node x="2131.0" y="233.0">controller.Command</node>
+    <node x="4089.0" y="311.0">controller.commands.LumaComponentCommand</node>
+    <node x="4372.0" y="311.0">controller.commands.SharpenCommand</node>
+    <node x="502.0" y="311.0">controller.commands.HorizontalFlipCommand</node>
+    <node x="825.25" y="0.0">model.Filter</node>
+    <node x="204.99999999999997" y="160.0">model.CustomColorMatrix</node>
+    <node x="16.5" y="384.0">model.ImageProcessingModel</node>
+    <node x="235.49999999999997" y="0.0">model.ColorMatrix</node>
+    <node x="1447.0" y="311.0">controller.commands.GreenComponentCommand</node>
+    <node x="311.0" y="462.0">controller.ImageControllerImpl</node>
+    <node x="1120.0" y="384.0">Main</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="controller.commands.ViewToRenderHelpMessageCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="3478.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.AbstractFilter" target="model.Filter" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.GreyscaleColorMatrix" target="model.ColorMatrix" relationship="REALIZATION">
+      <point x="54.75" y="-14.0" />
+      <point x="591.25" y="139.0" />
+      <point x="544.5597826086956" y="139.0" />
+      <point x="544.5597826086956" y="54.0" />
+      <point x="306.0" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.RedComponentCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="3159.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.GreenComponentCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1581.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.PixelImpl" target="model.Pixel" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.SepiaColorMatrix" target="model.AbstractColorMatrix" relationship="GENERALIZATION">
+      <point x="46.25" y="-14.0" />
+      <point x="138.75" y="139.0" />
+      <point x="363.25" y="139.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.VerticalFlipCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="3779.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.GaussianBlurFilter" target="model.Filter" relationship="REALIZATION">
+      <point x="48.25" y="-14.0" />
+      <point x="1010.75" y="134.0" />
+      <point x="967.5" y="134.0" />
+      <point x="967.5" y="54.0" />
+      <point x="870.25" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.BlueComponentCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="127.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.AbstractColorMatrix" target="model.ColorMatrix" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="363.25" y="54.0" />
+      <point x="306.0" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="view.ImageViewImpl" target="view.ImageView" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.SharpenCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="4469.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.SharpenFilter" target="model.Filter" relationship="REALIZATION">
+      <point x="-38.75" y="-14.0" />
+      <point x="729.75" y="134.0" />
+      <point x="763.5" y="134.0" />
+      <point x="763.5" y="54.0" />
+      <point x="870.25" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.LoadCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1127.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.GaussianBlurFilter" target="model.AbstractFilter" relationship="GENERALIZATION">
+      <point x="-48.25" y="-14.0" />
+      <point x="914.25" y="134.0" />
+      <point x="870.25" y="134.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.HorizontalFlipCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="621.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.ImageControllerImpl" target="controller.ImageController" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.GreyscaleColorMatrix" target="model.AbstractColorMatrix" relationship="GENERALIZATION">
+      <point x="-54.75" y="-14.0" />
+      <point x="481.75" y="139.0" />
+      <point x="363.25" y="139.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.ValueComponentCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="891.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.ViewToRenderWelcomeMessageCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2823.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.GreyscaleCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="378.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.ImageImpl" target="model.Image" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.SharpenFilter" target="model.AbstractFilter" relationship="GENERALIZATION">
+      <point x="38.75" y="-14.0" />
+      <point x="807.25" y="134.0" />
+      <point x="870.25" y="134.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.CustomColorMatrix" target="model.ColorMatrix" relationship="REALIZATION">
+      <point x="-50.5" y="-14.0" />
+      <point x="255.49999999999997" y="129.0" />
+      <point x="247.55978260869563" y="129.0" />
+      <point x="247.55978260869563" y="54.0" />
+      <point x="306.0" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.ImageProcessingModelImpl" target="model.ImageProcessingModel" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.IntensityComponentCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2072.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.BrightenCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1329.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.SaveCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2320.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.CustomColorMatrix" target="model.AbstractColorMatrix" relationship="GENERALIZATION">
+      <point x="50.5" y="-14.0" />
+      <point x="356.5" y="139.0" />
+      <point x="363.25" y="139.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.SepiaCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1821.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.LumaComponentCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="4220.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.BlurCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="3988.5" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="controller.commands.RunFileCommand" target="controller.Command" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2518.0" y="286.0" />
+      <point x="2196.0" y="286.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="model.SepiaColorMatrix" target="model.ColorMatrix" relationship="REALIZATION">
+      <point x="-46.25" y="-14.0" />
+      <point x="46.25" y="139.0" />
+      <point x="87.49999999999997" y="139.0" />
+      <point x="87.49999999999997" y="54.0" />
+      <point x="306.0" y="54.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.23610202746893394" showDependencies="false" x="2283.5" y="245.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
