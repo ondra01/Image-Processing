@@ -17,8 +17,8 @@ public class Main {
    */
   public static void main(String[] args) {
     ImageProcessingModel model = new ImageProcessingModelImpl();
-    ImageView view = new ImageViewImpl(model, System.out);
-    InputStreamReader input = new InputStreamReader(System.in);
+    //ImageView view = new ImageViewImpl(model, System.out);
+    //InputStreamReader input = new InputStreamReader(System.in);
     ImageController controller = new ImageControllerImpl(model, view, input);
 
     controller.runApplication();

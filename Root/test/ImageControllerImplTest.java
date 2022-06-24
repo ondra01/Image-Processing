@@ -39,7 +39,8 @@ public class ImageControllerImplTest {
     view = new ImageViewImpl(model, output);
     input = new StringReader("load images/koala.ppm koala q");
     controller = new ImageControllerImpl(model, view, input);
-    input2 = new StringReader("load images/koala.ppm koala save images/alsoKoala.ppm koala q");
+    input2 = new StringReader("load images/koala.ppm koala save images/alsoKoala.ppm koala "
+            + "save images/alsoKoala.png save images/alsoKoala.jpeg koala q");
     controller2 = new ImageControllerImpl(model, view, input2);
     input3 = new StringReader("load images/koala.ppm koala "
             + "vertical-flip koala koala-vertical q");
