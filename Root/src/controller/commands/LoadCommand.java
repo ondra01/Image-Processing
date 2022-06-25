@@ -8,7 +8,7 @@ import controller.ImageController;
 import model.Image;
 import model.ImageImpl;
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Command to load an Image from a file as a 2 dimensional array of Pixels represented by the
@@ -17,7 +17,7 @@ import view.ImageView;
 public class LoadCommand implements Command {
 
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+  public void apply(ImageProcessingModel model, TextView view, ImageController controller,
                     Scanner sc) throws IOException {
     String filePathName = sc.next();
     String imageName = sc.next();

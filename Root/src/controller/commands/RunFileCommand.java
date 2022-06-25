@@ -8,7 +8,7 @@ import java.util.Scanner;
 import controller.Command;
 import controller.ImageController;
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Command which accepts a script file as a command-line option.
@@ -18,7 +18,7 @@ import view.ImageView;
  */
 public class RunFileCommand implements Command {
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+  public void apply(ImageProcessingModel model, TextView view, ImageController controller,
                     Scanner sc) throws IOException {
     String scriptFile = sc.next();
     Scanner textFileScanner = null;

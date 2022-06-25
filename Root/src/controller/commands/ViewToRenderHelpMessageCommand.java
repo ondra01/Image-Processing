@@ -6,7 +6,7 @@ import java.util.Scanner;
 import controller.Command;
 import controller.ImageController;
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Command which utilizes the view to display a help menu to the user with available commands.
@@ -14,7 +14,7 @@ import view.ImageView;
 public class ViewToRenderHelpMessageCommand implements Command {
 
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+  public void apply(ImageProcessingModel model, TextView view, ImageController controller,
                     Scanner sc) throws IOException {
     StringBuilder str = new StringBuilder();
     str.append("The possible commands are:\n");

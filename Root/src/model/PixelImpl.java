@@ -11,6 +11,9 @@ public class PixelImpl implements Pixel {
   private final int green;
   private final int blue;
 
+  public static final int COMPONENT_LOW = 0;
+  public static final int COMPONENT_HIGH = 255;
+
   /**
    * This constructor allows the user to specify all relevant values needed to describe an
    * individual pixel.
@@ -20,23 +23,23 @@ public class PixelImpl implements Pixel {
    * @param blue  represents the Blue value of a pixel, ranging from 0 to 255 inclusive.
    */
   public PixelImpl(int red, int green, int blue) {
-    if (red < 0) {
-      red = 0;
+    if (red < this.COMPONENT_LOW) {
+      red = this.COMPONENT_LOW;
     }
-    if (green < 0) {
-      green = 0;
+    if (green < this.COMPONENT_LOW) {
+      green = this.COMPONENT_LOW;
     }
-    if (blue < 0) {
-      blue = 0;
+    if (blue < this.COMPONENT_LOW) {
+      blue = this.COMPONENT_LOW;
     }
-    if (red > 255) {
-      red = 255;
+    if (red > this.COMPONENT_HIGH) {
+      red = this.COMPONENT_HIGH;
     }
-    if (green > 255) {
-      green = 255;
+    if (green > this.COMPONENT_HIGH) {
+      green = this.COMPONENT_HIGH;
     }
-    if (blue > 255) {
-      blue = 255;
+    if (blue > this.COMPONENT_HIGH) {
+      blue = this.COMPONENT_HIGH;
     }
     this.red = red;
     this.green = green;
@@ -49,11 +52,11 @@ public class PixelImpl implements Pixel {
    * @param shade represents the RGB values of a pixel, ranging from 0 to 255 inclusive.
    */
   public PixelImpl(int shade) {
-    if (shade < 0) {
-      shade = 0;
+    if (shade < this.COMPONENT_LOW) {
+      shade = this.COMPONENT_LOW;
     }
-    if (shade > 255) {
-      shade = 255;
+    if (shade > this.COMPONENT_HIGH) {
+      shade = this.COMPONENT_HIGH;
     }
     this.red = shade;
     this.green = shade;

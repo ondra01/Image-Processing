@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -11,6 +13,11 @@ public class ImageImpl implements Image {
   private final int width; //This is the number of columns
   private final int height; //This is the number of rows.
 
+  private final Map<Integer, Integer> redHistogram = new HashMap<Integer, Integer>();
+  private final Map<Integer, Integer> greenHistogram = new HashMap<Integer, Integer>();
+  private final Map<Integer, Integer> blueHistogram = new HashMap<Integer, Integer>();
+  private final Map<Integer, Integer> intensityHistogram = new HashMap<Integer, Integer>();
+
   /**
    * Only Constructor for an ImageImpl.
    *
@@ -21,8 +28,35 @@ public class ImageImpl implements Image {
       this.pixels = pixels;
       this.width = pixels[0].length;
       this.height = pixels.length;
+      this.populateHistograms();
     } else {
       throw new IllegalArgumentException("pixels cannot be null!");
+    }
+  }
+
+  private void populateHistograms() {
+    //Set the default frequency of every level of all Histograms to 0.
+    for (int level = PixelImpl.COMPONENT_LOW; level <= PixelImpl.COMPONENT_HIGH; level++) {
+      this.redHistogram.put(level, 0);
+      this.greenHistogram.put(level, 0);
+      this.blueHistogram.put(level, 0);
+      this.intensityHistogram.put(level, 0);
+    }
+    //For every Pixel determine the RGB and intensity levels
+    for (int row = 0; row < this.height; row++) {
+      for (int col = 0; col < this.width; col++) {
+        int redLevel = this.pixels[row][col].getRedValue();
+        int greenLevel = this.pixels[row][col].getGreenValue();
+        int blueLevel = this.pixels[row][col].getBlueValue();
+        int intensityLevel = (int) this.pixels[row][col].getIntensity();
+
+        //Add one to the frequency of that level in the relevant Histogram
+        this.redHistogram.put(redLevel, this.redHistogram.get(redLevel) + 1);
+        this.greenHistogram.put(greenLevel, this.greenHistogram.get(greenLevel) + 1);
+        this.blueHistogram.put(blueLevel, this.blueHistogram.get(blueLevel) + 1);
+        this.intensityHistogram.put(intensityLevel,
+                this.intensityHistogram.get(intensityLevel) + 1);
+      }
     }
   }
 
@@ -201,6 +235,26 @@ public class ImageImpl implements Image {
       }
     }
     return new ImageImpl(alteredPixels);
+  }
+
+  @Override
+  public Map<Integer, Integer> getRedHistogram() {
+    return this.redHistogram;
+  }
+
+  @Override
+  public Map<Integer, Integer> getGreenHistogram() {
+    return this.greenHistogram;
+  }
+
+  @Override
+  public Map<Integer, Integer> getBlueHistogram() {
+    return this.blueHistogram;
+  }
+
+  @Override
+  public Map<Integer, Integer> getIntensityHistogram() {
+    return this.intensityHistogram;
   }
 
   private Pixel applyFilterToPixel(Filter filter, int imageRow, int imageColumn) {

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 /**
  * Represents a 2 dimensional Image which has methods to create a new Image based on the data
  * stored by this Image.
@@ -79,4 +81,44 @@ public interface Image {
   Image greyscaleImage();
 
   Image sepiaToneImage();
+
+  /**
+   * A histogram is a table of (value,frequency) entries. For RGB color images there are 4
+   * Histograms associated with an Image. One Histogram for each component and one for the
+   * intensity (the average of all components). If the Image has been grey-scaled then all 4 of the
+   * Histograms are the same.
+   *
+   * @return the HashMap representing the Histogram of the Red Pixel values.
+   */
+  Map<Integer, Integer> getRedHistogram();
+
+  /**
+   * A histogram is a table of (value,frequency) entries. For RGB color images there are 4
+   * Histograms associated with an Image. One Histogram for each component and one for the
+   * intensity (the average of all components). If the Image has been grey-scaled then all 4 of the
+   * Histograms are the same.
+   *
+   * @return the HashMap representing the Histogram of the Green Pixel values.
+   */
+  Map<Integer, Integer> getGreenHistogram();
+
+  /**
+   * A histogram is a table of (value,frequency) entries. For RGB color images there are 4
+   * Histograms associated with an Image. One Histogram for each component and one for the
+   * intensity (the average of all components). If the Image has been grey-scaled then all 4 of the
+   * Histograms are the same.
+   *
+   * @return the HashMap representing the Histogram of the Blue Pixel values.
+   */
+  Map<Integer, Integer> getBlueHistogram();
+
+  /**
+   * A histogram is a table of (value,frequency) entries. For RGB color images there are 4
+   * Histograms associated with an Image. One Histogram for each component and one for the
+   * intensity (the average of all components). If the Image has been grey-scaled then all 4 of the
+   * Histograms are the same.
+   *
+   * @return the HashMap representing the Histogram of the Intensity (average) Pixel values.
+   */
+  Map<Integer, Integer> getIntensityHistogram();
 }

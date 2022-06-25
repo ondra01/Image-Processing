@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Represents a command available to the controller using the command design pattern. Commands
@@ -19,6 +19,6 @@ public interface Command {
    * @param view is the view for the application.
    * @param sc is the Scanner which takes in a Readable and holds or gets the input to the program.
    */
-  void apply(ImageProcessingModel model, ImageView view, ImageController controller, Scanner sc)
+  void apply(ImageProcessingModel model, TextView view, ImageController controller, Scanner sc)
           throws IOException;
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import controller.Command;
 import controller.ImageController;
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Used to command the view to render the welcome message.
@@ -15,7 +15,7 @@ import view.ImageView;
  */
 public class ViewToRenderWelcomeMessageCommand implements Command {
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+  public void apply(ImageProcessingModel model, TextView view, ImageController controller,
                     Scanner sc) throws IOException {
     try {
       StringBuilder str = new StringBuilder();

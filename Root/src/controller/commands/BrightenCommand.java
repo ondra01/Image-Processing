@@ -6,7 +6,7 @@ import java.util.Scanner;
 import controller.Command;
 import controller.ImageController;
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Command to create a brightened Image based on the specified Image, and the amount to brighten
@@ -14,7 +14,7 @@ import view.ImageView;
  */
 public class BrightenCommand implements Command {
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+  public void apply(ImageProcessingModel model, TextView view, ImageController controller,
                     Scanner sc) throws IOException {
     int amount = sc.nextInt();
     String imageName = sc.next();

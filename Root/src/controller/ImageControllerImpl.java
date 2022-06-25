@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -34,20 +35,27 @@ import controller.commands.VerticalFlipCommand;
 import controller.commands.ViewToRenderHelpMessageCommand;
 import controller.commands.ViewToRenderWelcomeMessageCommand;
 import model.Image;
+import model.ImageImpl;
 import model.ImageProcessingModel;
 import model.Pixel;
 import model.PixelImpl;
-import view.ImageView;
+import view.GUIView;
+import view.TextView;
 
 /**
- * Represents an ImageControllerImplementation for an Image processor application.
+ * Represents an ImageControllerImplementation for an Image processor application. This controller
+ * also acts as the listener for a GUI view.
  */
-public class ImageControllerImpl implements ImageController {
+public class ImageControllerImpl implements ImageController, Features {
   boolean programOver = false;
   private final ImageProcessingModel model;
-  private final ImageView view;
-  private final Readable input;
+  private TextView view;
+  private GUIView guiView;
+  private Readable input;
   Map<String, Command> commandMap = new HashMap<String, Command>();
+  private String mutationToPerform;
+  private String filepath;
+  private String userGivenName;
 
   /**
    * Default constructor for an ImageControllerImpl.
@@ -58,7 +66,7 @@ public class ImageControllerImpl implements ImageController {
    * @param input is the Readable abstraction for user input.
    * @throws IllegalArgumentException if model, view, or input are null.
    */
-  public ImageControllerImpl(ImageProcessingModel model, ImageView view, Readable input)
+  public ImageControllerImpl(ImageProcessingModel model, TextView view, Readable input)
           throws IllegalArgumentException {
     if (model == null || view == null || input == null) {
       throw new IllegalArgumentException("The model, view, and the Readable input cannot be null!");
@@ -66,25 +74,48 @@ public class ImageControllerImpl implements ImageController {
       this.model = model;
       this.view = view;
       this.input = input;
-      commandMap.put("help", new ViewToRenderHelpMessageCommand());
-      commandMap.put("load", new LoadCommand());
-      commandMap.put("save", new SaveCommand());
-      commandMap.put("red-component", new RedComponentCommand());
-      commandMap.put("green-component", new GreenComponentCommand());
-      commandMap.put("blue-component", new BlueComponentCommand());
-      commandMap.put("value-component", new ValueComponentCommand());
-      commandMap.put("intensity-component", new IntensityComponentCommand());
-      commandMap.put("luma-component", new LumaComponentCommand());
-      commandMap.put("h-flip", new HorizontalFlipCommand());
-      commandMap.put("v-flip", new VerticalFlipCommand());
-      commandMap.put("brighten", new BrightenCommand());
-      commandMap.put("welcome-message", new ViewToRenderWelcomeMessageCommand());
-      commandMap.put("blur", new BlurCommand());
-      commandMap.put("sharpen", new SharpenCommand());
-      commandMap.put("greyscale", new GreyscaleCommand());
-      commandMap.put("sepia", new SepiaCommand());
-      commandMap.put("file", new RunFileCommand());
+      this.setUpCommands();
     }
+  }
+
+  /**
+   * Controller constructor when using a GUIView.
+   *
+   * @param model is the model.
+   * @param view is the GUIView.
+   * @throws IllegalArgumentException if either the model or the view are null.
+   */
+  public ImageControllerImpl(ImageProcessingModel model, GUIView view)
+          throws IllegalArgumentException {
+    if (model == null || view == null) {
+      throw new IllegalArgumentException("The model, and GUI view cannot be null!");
+    } else {
+      this.model = model;
+      this.guiView = view;
+      this.guiView.acceptFeatures(this);
+      this.setUpCommands();
+    }
+  }
+
+  private void setUpCommands() {
+    commandMap.put("help", new ViewToRenderHelpMessageCommand());
+    commandMap.put("load", new LoadCommand());
+    commandMap.put("save", new SaveCommand());
+    commandMap.put("red-component", new RedComponentCommand());
+    commandMap.put("green-component", new GreenComponentCommand());
+    commandMap.put("blue-component", new BlueComponentCommand());
+    commandMap.put("value-component", new ValueComponentCommand());
+    commandMap.put("intensity-component", new IntensityComponentCommand());
+    commandMap.put("luma-component", new LumaComponentCommand());
+    commandMap.put("h-flip", new HorizontalFlipCommand());
+    commandMap.put("v-flip", new VerticalFlipCommand());
+    commandMap.put("brighten", new BrightenCommand());
+    commandMap.put("welcome-message", new ViewToRenderWelcomeMessageCommand());
+    commandMap.put("blur", new BlurCommand());
+    commandMap.put("sharpen", new SharpenCommand());
+    commandMap.put("greyscale", new GreyscaleCommand());
+    commandMap.put("sepia", new SepiaCommand());
+    commandMap.put("file", new RunFileCommand());
   }
 
   /**
@@ -94,14 +125,25 @@ public class ImageControllerImpl implements ImageController {
    */
   @Override
   public void runApplication() throws IllegalStateException {
-    try {
-      Scanner sc = new Scanner(input);
-      this.commandMap.get("welcome-message").apply(this.model, this.view, this, sc);
-      this.meatOfRunApplication(sc, "user-input");
+    if (this.guiView instanceof GUIView) {
+      this.runGUIApplication();
+    } else {
+      try {
+        Scanner sc = new Scanner(input);
+        this.commandMap.get("welcome-message").apply(this.model, this.view, this, sc);
+        this.meatOfRunApplication(sc, "user-input");
 
-    } catch (IOException e) {
-      throw new IllegalStateException("IOException thrown when attempting to run the program");
+      } catch (IOException e) {
+        throw new IllegalStateException("IOException thrown when attempting to run the program");
+      }
     }
+  }
+
+  /**
+   * Responsible for running the Image Processor using a GUI view.
+   */
+  private void runGUIApplication() {
+    this.guiView.renderApplication();
   }
 
   @Override
@@ -143,6 +185,8 @@ public class ImageControllerImpl implements ImageController {
 
   @Override
   public void saveImage(String filePathName, Image imageToSave) {
+    Objects.requireNonNull(imageToSave);
+    Objects.requireNonNull(filePathName);
     BufferedWriter writer = null;
     try {
       writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePathName)));
@@ -196,7 +240,7 @@ public class ImageControllerImpl implements ImageController {
     //read the file line by line, and populate a string. This will throw away any comment lines
     while (sc.hasNextLine()) {
       String s = sc.nextLine();
-      if (s.charAt(0) != '#') {
+      if (s != null && s.length() > 0 && s.charAt(0) != '#') {
         builder.append(s + System.lineSeparator());
       }
     }
@@ -251,5 +295,29 @@ public class ImageControllerImpl implements ImageController {
       }
     }
     return loadedPixels;
+  }
+
+  @Override
+  public void doBlur() {
+    this.model.blurImage(guiView.getOriginalName(), guiView.getAlteredName());
+  }
+
+  @Override
+  public void doLoadImage() {
+    //Ask view for filePath
+    String userGivenName = this.guiView.getUserGivenName();
+    String passedFilepath = this.guiView.getFilePath(true);
+    try {
+      this.model.addImage(userGivenName, new ImageImpl(this.loadImage2(passedFilepath)));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    this.guiView.displayImage(userGivenName);
+  }
+
+  @Override
+  public void doSaveImage() {
+    String passedFilepath = this.guiView.getFilePath(false);
+    this.saveImage(passedFilepath, this.model.getImage(passedFilepath.split(".")[0]));
   }
 }

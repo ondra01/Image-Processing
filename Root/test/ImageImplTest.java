@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
 import model.Image;
 import model.ImageImpl;
 import model.Pixel;
@@ -235,5 +237,64 @@ public class ImageImplTest {
             imageWithOnePixelBlueToGreyScale.getPixel(0, 0).getGreenValue());
     assertEquals(210,
             imageWithOnePixelBlueToGreyScale.getPixel(0, 0).getBlueValue());
+  }
+
+  @Test
+  public void testImageWithOnePixelHistograms() {
+    Map<Integer, Integer> redHistogram = imageWithOnePixel.getRedHistogram();
+    Map<Integer, Integer> greenHistogram = imageWithOnePixel.getGreenHistogram();
+    Map<Integer, Integer> blueHistogram = imageWithOnePixel.getBlueHistogram();
+    Map<Integer, Integer> intensityHistogram = imageWithOnePixel.getIntensityHistogram();
+
+    for (int level = PixelImpl.COMPONENT_LOW; level < PixelImpl.COMPONENT_HIGH; level++) {
+      if (level == 36) {
+        assertEquals(1, redHistogram.get(level).intValue());
+        assertEquals(0, greenHistogram.get(level).intValue());
+        assertEquals(0, blueHistogram.get(level).intValue());
+        assertEquals(0, intensityHistogram.get(level).intValue());
+      } else if (level == 128) {
+        assertEquals(0, redHistogram.get(level).intValue());
+        assertEquals(1, greenHistogram.get(level).intValue());
+        assertEquals(0, blueHistogram.get(level).intValue());
+        assertEquals(0, intensityHistogram.get(level).intValue());
+      } else if (level == 210) {
+        assertEquals(0, redHistogram.get(level).intValue());
+        assertEquals(0, greenHistogram.get(level).intValue());
+        assertEquals(1, blueHistogram.get(level).intValue());
+        assertEquals(0, intensityHistogram.get(level).intValue());
+      } else if (level == 124) {
+        assertEquals(0, redHistogram.get(level).intValue());
+        assertEquals(0, greenHistogram.get(level).intValue());
+        assertEquals(0, blueHistogram.get(level).intValue());
+        assertEquals(1, intensityHistogram.get(level).intValue());
+      } else {
+        assertEquals(0, redHistogram.get(level).intValue());
+        assertEquals(0, greenHistogram.get(level).intValue());
+        assertEquals(0, blueHistogram.get(level).intValue());
+        assertEquals(0, intensityHistogram.get(level).intValue());
+      }
+    }
+  }
+
+  @Test
+  public void test2X2ImageHistograms() {
+    Map<Integer, Integer> redHistogram = twoByTwoImage.getRedHistogram();
+    Map<Integer, Integer> greenHistogram = twoByTwoImage.getGreenHistogram();
+    Map<Integer, Integer> blueHistogram = twoByTwoImage.getBlueHistogram();
+    Map<Integer, Integer> intensityHistogram = twoByTwoImage.getIntensityHistogram();
+
+    for (int level = PixelImpl.COMPONENT_LOW; level <= PixelImpl.COMPONENT_HIGH; level++) {
+      if (level == 10 || level == 194 || level == 154 || level == 239) {
+        assertEquals(1, redHistogram.get(level).intValue());
+        assertEquals(1, greenHistogram.get(level).intValue());
+        assertEquals(1, blueHistogram.get(level).intValue());
+        assertEquals(1, intensityHistogram.get(level).intValue());
+      } else {
+        assertEquals(0, redHistogram.get(level).intValue());
+        assertEquals(0, greenHistogram.get(level).intValue());
+        assertEquals(0, blueHistogram.get(level).intValue());
+        assertEquals(0, intensityHistogram.get(level).intValue());
+      }
+    }
   }
 }

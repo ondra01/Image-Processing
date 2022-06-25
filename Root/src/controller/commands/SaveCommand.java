@@ -7,7 +7,7 @@ import controller.Command;
 import controller.ImageController;
 import model.Image;
 import model.ImageProcessingModel;
-import view.ImageView;
+import view.TextView;
 
 /**
  * Command to save an Image to a file from a 2 dimensional array of Pixels represented by the
@@ -15,7 +15,7 @@ import view.ImageView;
  */
 public class SaveCommand implements Command {
   @Override
-  public void apply(ImageProcessingModel model, ImageView view, ImageController controller,
+  public void apply(ImageProcessingModel model, TextView view, ImageController controller,
                     Scanner sc) throws IOException {
     String filePathName = sc.next();
     String imageName = sc.next();

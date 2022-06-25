@@ -8,8 +8,8 @@ import controller.ImageControllerImpl;
 import model.Image;
 import model.ImageProcessingModel;
 import model.ImageProcessingModelImpl;
-import view.ImageView;
-import view.ImageViewImpl;
+import view.TextView;
+import view.TextViewImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ImageControllerImplTest {
   ImageProcessingModel model;
-  ImageView view;
+  TextView view;
   StringBuilder output;
 
   //Readable inputs and their respective controllers
@@ -36,17 +36,17 @@ public class ImageControllerImplTest {
   public void setUp() throws Exception {
     model = new ImageProcessingModelImpl();
     output = new StringBuilder();
-    view = new ImageViewImpl(model, output);
+    view = new TextViewImpl(model, output);
     input = new StringReader("load images/koala.ppm koala q");
     controller = new ImageControllerImpl(model, view, input);
     input2 = new StringReader("load images/koala.ppm koala save images/alsoKoala.ppm koala "
-            + "save images/alsoKoala.png save images/alsoKoala.jpeg koala q");
+            + "save images/alsoKoala.png koala save images/alsoKoala.jpeg koala q");
     controller2 = new ImageControllerImpl(model, view, input2);
     input3 = new StringReader("load images/koala.ppm koala "
-            + "vertical-flip koala koala-vertical q");
+            + "v-flip koala koala-vertical q");
     controller3 = new ImageControllerImpl(model, view, input3);
     input4 = new StringReader("load images/koala.ppm koala "
-            + "horizontal-flip koala koala-horizontal q");
+            + "h-flip koala koala-horizontal q");
     controller4 = new ImageControllerImpl(model, view, input4);
   }
 
@@ -59,7 +59,7 @@ public class ImageControllerImplTest {
   }
 
   @Test
-  public void testExportImageToPPM() {
+  public void testExportImage() {
     controller2.runApplication();
     Image loadedImage = model.getImage("koala");
     String[] lines = output.toString().split("\n");
